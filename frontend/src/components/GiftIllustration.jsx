@@ -23,9 +23,9 @@ export default function GiftIllustration({
         focusable="false"
       >
         <defs>
-          {/* Recorte estrito alinhado às bordas esquerda (x=46) e direita (x=154) do corpo da caixa */}
+          {/* Recorte trapezoidal suave: concentrado na abertura (x=48..152) e expandindo para cima (x=18..182) */}
           <clipPath id="gift-light-clip">
-            <rect x="46" y="0" width="108" height="98" />
+            <polygon points="18,0 182,0 152,98 48,98" />
           </clipPath>
 
           {/* Coluna vertical principal de luz projetada de dentro da abertura */}
@@ -68,7 +68,7 @@ export default function GiftIllustration({
           </linearGradient>
 
           <mask id="gift-edge-fade-mask">
-            <rect x="46" y="0" width="108" height="98" fill="url(#gift-vertical-fade)" />
+            <rect x="0" y="0" width="200" height="98" fill="url(#gift-vertical-fade)" />
           </mask>
 
           {/* Flash intenso na boca interna da caixa */}
@@ -103,91 +103,67 @@ export default function GiftIllustration({
             fill="#18372D"
           />
 
-          {/* Iluminação projetada estritamente de dentro da abertura (recortada em x=46..154) */}
+          {/* Iluminação projetada em leque trapezoidal suave a partir da abertura da caixa */}
           <g clipPath="url(#gift-light-clip)">
-            {/* Vazamento crescente de luz vertical nos instantes finais do tremor */}
-            <rect
-              x="46"
-              y="72"
-              width="108"
-              height="26"
+            {/* Vazamento crescente de luz nos instantes finais do tremor */}
+            <polygon
+              points="40,72 160,72 152,98 48,98"
               fill="url(#gift-charge-leak)"
               className="gift-light-charge-leak"
             />
 
-            {/* Grupo principal da luz aberta: coluna, faixas laterais verticais, núcleo central e flash */}
+            {/* Grupo principal da luz aberta: feixe trapezoidal, faixas em leque, núcleo central e flash */}
             <g className="gift-light-shaft">
-              {/* Camada 1: coluna vertical principal de luz dourada */}
-              <rect
-                x="46"
-                y="0"
-                width="108"
-                height="98"
+              {/* Camada 1: feixe trapezoidal principal de luz dourada */}
+              <polygon
+                points="18,0 182,0 152,98 48,98"
                 fill="url(#gift-shaft-vertical)"
                 className="gift-light-column"
               />
 
-              {/* Camada 2: faixas laterais verticais nítidas alinhadas exatamente às bordas x=46 e x=154 */}
+              {/* Camada 2: faixas laterais acompanhando a abertura suave do feixe */}
               <g mask="url(#gift-edge-fade-mask)" className="gift-light-edges">
-                <rect x="46" y="0" width="16" height="98" fill="url(#gift-edge-left)" />
-                <rect x="138" y="0" width="16" height="98" fill="url(#gift-edge-right)" />
-                {/* Filetes verticais nítidos demarcando as bordas exatas da projeção */}
-                <rect x="46" y="6" width="2" height="92" fill="#F2BE52" opacity="0.95" />
-                <rect x="152" y="6" width="2" height="92" fill="#F2BE52" opacity="0.95" />
+                <polygon points="18,0 38,0 64,98 48,98" fill="url(#gift-edge-left)" />
+                <polygon points="162,0 182,0 152,98 136,98" fill="url(#gift-edge-right)" />
+                {/* Filetes inclinados sutis demarcando a expansão suave do feixe */}
+                <polygon points="18,0 20.5,0 50,98 48,98" fill="#F2BE52" opacity="0.7" />
+                <polygon points="179.5,0 182,0 152,98 150,98" fill="#F2BE52" opacity="0.7" />
 
-                {/* Feixes verticais internos com ritmos suaves */}
-                <rect
-                  x="66"
-                  y="4"
-                  width="7"
-                  height="94"
+                {/* Feixes internos abrindo em leque suave */}
+                <polygon
+                  points="52,4 62,4 73,98 66,98"
                   fill="#FFF2BE"
                   className="gift-light-streak gift-light-streak-a"
                 />
-                <rect
-                  x="92"
-                  y="0"
-                  width="16"
-                  height="98"
+                <polygon
+                  points="87,0 113,0 107,98 93,98"
                   fill="#FFFFFF"
                   className="gift-light-streak gift-light-streak-b"
                 />
-                <rect
-                  x="127"
-                  y="6"
-                  width="7"
-                  height="92"
+                <polygon
+                  points="138,6 148,6 134,98 127,98"
                   fill="#FFF2BE"
                   className="gift-light-streak gift-light-streak-c"
                 />
               </g>
 
-              {/* Camada 3: núcleo central mais luminoso projetado de dentro do presente */}
-              <rect
-                x="68"
-                y="6"
-                width="64"
-                height="92"
+              {/* Camada 3: núcleo central mais luminoso abrindo para cima */}
+              <polygon
+                points="52,6 148,6 130,98 70,98"
                 fill="url(#gift-center-beam)"
                 className="gift-light-core"
               />
 
               {/* Camada 4: fonte intensa concentrada na boca da abertura */}
-              <rect
-                x="46"
-                y="74"
-                width="108"
-                height="24"
+              <polygon
+                points="41,74 159,74 152,98 48,98"
                 fill="url(#gift-opening-flash)"
                 className="gift-light-mouth"
               />
 
               {/* Camada 5: flash inicial brilhante no instante em que a tampa se abre */}
-              <rect
-                x="46"
-                y="0"
-                width="108"
-                height="98"
+              <polygon
+                points="18,0 182,0 152,98 48,98"
                 fill="#FFF8DF"
                 className="gift-light-flash"
               />
@@ -497,25 +473,37 @@ export default function GiftIllustration({
   if (variant === 'trio') {
     return (
       <svg viewBox="0 0 280 112" className={className} aria-hidden="true" focusable="false">
-        {/* Presente esquerdo (Muted Sage + laço Antique Gold) */}
+        {/* Presente esquerdo (Muted Sage + laço e faixa inteiramente dourados) */}
         <g transform="rotate(-9 58 76)">
-          <rect x="20" y="48" width="66" height="52" rx="10" fill="#A9B7A0" />
+          <path
+            d="M22 51H84Q86 51 86 53V90A10 10 0 0 1 76 100H30A10 10 0 0 1 20 90V53Q20 51 22 51Z"
+            fill="#A9B7A0"
+          />
           <rect x="16" y="38" width="74" height="16" rx="6" fill="#92A388" />
+          <rect x="20" y="54" width="66" height="2" fill="#98A88E" />
           <rect x="47" y="38" width="12" height="62" fill="#C5A16B" />
+          <rect x="47" y="54" width="12" height="2" fill="#B28C55" opacity="0.55" />
           <path d="M53 38c-5-11-20-15-22-6-2 7 11 8 22 6Z" fill="#D7B98A" />
           <path d="M53 38c5-11 20-15 22-6 2 7-11 8-22 6Z" fill="#C5A16B" />
+          <rect x="48" y="34" width="10" height="7" rx="3.5" fill="#B58E56" />
         </g>
 
-        {/* Presente direito (Cranberry + laço Antique Gold) */}
+        {/* Presente direito (Cranberry + laço e faixa inteiramente dourados) */}
         <g transform="rotate(9 222 76)">
-          <rect x="194" y="48" width="66" height="52" rx="10" fill="#A83D46" />
-          <rect x="190" y="38" width="74" height="16" rx="6" fill="#8B2F37" />
+          <path
+            d="M196 51H258Q260 51 260 53V90A10 10 0 0 1 250 100H204A10 10 0 0 1 194 90V53Q194 51 196 51Z"
+            fill="#A83D46"
+          />
+          <rect x="190" y="38" width="74" height="16" rx="6" fill="#8F3139" />
+          <rect x="194" y="54" width="66" height="2" fill="#97343C" />
           <rect x="221" y="38" width="12" height="62" fill="#C5A16B" />
+          <rect x="221" y="54" width="12" height="2" fill="#B28C55" opacity="0.55" />
           <path d="M227 38c-5-11-20-15-22-6-2 7 11 8 22 6Z" fill="#D7B98A" />
           <path d="M227 38c5-11 20-15 22-6 2 7-11 8-22 6Z" fill="#C5A16B" />
+          <rect x="222" y="34" width="10" height="7" rx="3.5" fill="#B58E56" />
         </g>
 
-        {/* Presente central (Forest Green + Deep Pine + Cranberry + Antique Gold) */}
+        {/* Presente central (Forest Green + tampa Deep Pine + laço e faixa inteiramente dourados) */}
         <g>
           <g className={`gift-glow ${opened ? 'gift-glow-open' : ''}`}>
             <ellipse cx="140" cy="40" rx="34" ry="10" fill="#F5ECD9" />
@@ -523,15 +511,20 @@ export default function GiftIllustration({
             <circle cx="184" cy="18" r="2.5" fill="#A83D46" />
           </g>
 
-          <rect x="96" y="42" width="88" height="64" rx="12" fill="#244638" />
-          <rect x="132" y="42" width="16" height="64" fill="#C5A16B" />
+          <path
+            d="M98 46H182Q184 46 184 48V94A12 12 0 0 1 172 106H108A12 12 0 0 1 96 94V48Q96 46 98 46Z"
+            fill="#244638"
+          />
+          <rect x="96" y="48" width="88" height="2.2" fill="#1E3C30" />
+          <rect x="132" y="46" width="16" height="60" fill="#C5A16B" />
+          <rect x="132" y="48" width="16" height="2.2" fill="#B28C55" opacity="0.55" />
 
           <g className={`gift-lid ${opened ? 'gift-lid-open' : ''}`}>
-            <rect x="90" y="28" width="100" height="20" rx="8" fill="#18372D" />
+            <rect x="90" y="28" width="100" height="20" rx="8" fill="#1A382D" />
             <rect x="132" y="28" width="16" height="20" fill="#C5A16B" />
-            <path d="M140 28c-6-14-24-18-27-8-2 8 13 9 27 8Z" fill="#A83D46" />
-            <path d="M140 28c6-14 24-18 27-8 2 8-13 9-27 8Z" fill="#8B2F37" />
-            <circle cx="140" cy="28" r="5" fill="#C5A16B" />
+            <path d="M140 28c-6-14-24-18-27-8-2 8 13 9 27 8Z" fill="#D7B98A" />
+            <path d="M140 28c6-14 24-18 27-8 2 8-13 9-27 8Z" fill="#C5A16B" />
+            <rect x="134" y="23.5" width="12" height="8.5" rx="4.25" fill="#B58E56" />
           </g>
         </g>
       </svg>

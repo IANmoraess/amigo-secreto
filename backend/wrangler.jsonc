@@ -7,7 +7,7 @@
     {
       "binding": "DB",
       "database_name": "amigo-secreto-db",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "6c523312-414a-47bc-86e7-9975cdbfb6bd",
       "migrations_dir": "migrations"
     }
   ],

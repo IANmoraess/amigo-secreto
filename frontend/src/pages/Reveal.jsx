@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Gift } from 'lucide-react';
+import { CircleCheck, Gift } from 'lucide-react';
 import Alert from '../components/Alert.jsx';
 import Button from '../components/Button.jsx';
 import Card from '../components/Card.jsx';
-import DrawTicket from '../components/DrawTicket.jsx';
 import GiftIllustration from '../components/GiftIllustration.jsx';
+import GiftTag from '../components/GiftTag.jsx';
 import Spinner from '../components/Spinner.jsx';
 import { getErrorMessage, participantApi } from '../services/api.js';
 
@@ -197,7 +197,7 @@ export default function Reveal() {
             Seu amigo secreto é
           </h2>
 
-          <DrawTicket
+          <GiftTag
             ref={resultRef}
             receiverName={receiverName}
             ariaLabelledBy="resultado"
@@ -210,10 +210,15 @@ export default function Reveal() {
       ) : (
         <div className="space-y-5">
           {access.hasRevealed ? (
-            <Alert type="info" title="Você já revelou seu amigo secreto">
-              Sem problemas: toque no presente ou no botão abaixo para consultar o nome sorteado
-              novamente.
-            </Alert>
+            <div role="status" className="mx-auto max-w-sm space-y-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-pine-50 px-3 py-1 text-xs font-semibold text-pine-800">
+                <CircleCheck className="h-3.5 w-3.5 text-pine-700" aria-hidden="true" />
+                Sorteio já consultado
+              </span>
+              <p className="text-sm leading-relaxed text-charcoal-soft">
+                Esqueceu quem tirou? Toque no presente ou no botão abaixo para ver novamente.
+              </p>
+            </div>
           ) : (
             <p className="mx-auto max-w-prose text-charcoal-soft">
               Seu presente está pronto. Quando ninguém estiver olhando a sua tela, toque nele ou no

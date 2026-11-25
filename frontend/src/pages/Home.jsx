@@ -1,33 +1,33 @@
 import { Link } from 'react-router-dom';
-import { Lock, Send, ShieldCheck, Shuffle, Sparkles, UserPlus, Users } from 'lucide-react';
+import { Send, Shuffle, Sparkles, UserPlus, Users } from 'lucide-react';
 import Card from '../components/Card.jsx';
 import GiftIllustration from '../components/GiftIllustration.jsx';
 import { buttonClasses } from '../components/Button.jsx';
 
 const STEPS = [
   {
+    number: '01',
     Icon: UserPlus,
-    badgeClasses: 'bg-mint-100 text-pine-800',
     title: 'Crie o evento',
-    text: 'Escolha o nome da confraternização de Natal com a família ou amigos.',
+    text: 'Dê um nome à sua confraternização.',
   },
   {
+    number: '02',
     Icon: Users,
-    badgeClasses: 'bg-gold-100 text-gold-600',
-    title: 'Adicione os participantes',
-    text: 'Cadastre todo mundo e confira a lista com calma antes de sortear.',
+    title: 'Adicione pessoas',
+    text: 'Cadastre e confira os participantes.',
   },
   {
+    number: '03',
     Icon: Shuffle,
-    badgeClasses: 'bg-berry-100 text-berry-600',
-    title: 'Realize o sorteio',
-    text: 'O sorteio acontece uma única vez e ninguém tira a si mesmo.',
+    title: 'Faça o sorteio',
+    text: 'Um sorteio único, sem tirar a si mesmo.',
   },
   {
+    number: '04',
     Icon: Send,
-    badgeClasses: 'bg-mint-100 text-pine-800',
-    title: 'Envie os links secretos',
-    text: 'Cada pessoa recebe seu link privado para abrir o próprio ticket.',
+    title: 'Envie os links',
+    text: 'Cada pessoa recebe seu resultado privado.',
   },
 ];
 
@@ -39,13 +39,12 @@ export default function Home() {
       <div>
         <GiftIllustration
           variant="trio"
-          className="relative z-0 mx-auto -mb-3.5 h-24 w-60 sm:h-28 sm:w-72"
+          className="relative z-0 mx-auto -mb-4 aspect-[5/2] w-72 max-w-full sm:-mb-5 sm:w-[350px]"
         />
 
         <Card className="relative z-1 text-center">
           <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-mint-50 px-3.5 py-1 text-xs font-semibold text-pine-800">
-            <Lock className="h-3.5 w-3.5 text-berry-600" aria-hidden="true" />
-            Amigo secreto de Natal · online e gratuito
+            Amigo secreto de Natal
           </div>
 
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-balance text-pine-900 sm:text-4xl">
@@ -73,29 +72,37 @@ export default function Home() {
 
       <section aria-labelledby="como-funciona">
         <h2 id="como-funciona" className="text-xl font-bold tracking-tight text-pine-900 sm:text-2xl">
-          Como funciona
+          Como funciona?
         </h2>
-        <ol className="mt-4 grid gap-4 sm:grid-cols-2">
-          {STEPS.map(({ Icon, badgeClasses, title, text }, index) => (
+        <ol className="relative mt-6 grid grid-cols-1 md:mt-8 md:grid-cols-4 md:gap-4">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute top-5 right-[12.5%] left-[12.5%] hidden h-px bg-gold-500/60 md:block"
+          />
+          {STEPS.map(({ number, Icon, title, text }, index) => (
             <li
-              key={title}
+              key={number}
               style={{ '--stagger-index': index }}
-              className="stagger-item flex gap-4 rounded-3xl border border-sage/30 bg-warm-white p-5 shadow-[0_6px_22px_-12px_rgb(24_55_45/0.09)]"
+              className="stagger-item relative flex items-start gap-4 pb-7 last:pb-0 md:flex-col md:items-center md:gap-0 md:pb-0 md:text-center"
             >
-              <div
-                className={`relative flex h-12 w-12 flex-none items-center justify-center rounded-2xl ${badgeClasses}`}
-              >
-                <Icon className="h-5 w-5" aria-hidden="true" />
-                <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-pine-900 text-[11px] font-bold text-warm-white">
-                  {index + 1}
+              {index < STEPS.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute top-10 bottom-0 left-5 w-px bg-gold-500/55 md:hidden"
+                />
+              )}
+              <span className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-[#C5A16B] bg-pine-900 text-sm font-bold tracking-wide text-warm-white ring-4 ring-cream">
+                {number}
+              </span>
+              <div className="flex-1 pt-0.5 md:mt-5 md:flex md:flex-col md:items-center md:pt-0">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-sage/25 text-pine-800">
+                  <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
                 </span>
-              </div>
-              <div>
-                <h3 className="font-bold text-pine-900">
+                <h3 className="mt-3 text-[15px] leading-tight font-bold text-pine-900 md:whitespace-nowrap">
                   <span className="sr-only">Passo {index + 1}: </span>
                   {title}
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-charcoal-soft">{text}</p>
+                <p className="mt-1.5 text-sm leading-snug text-pretty text-charcoal-soft">{text}</p>
               </div>
             </li>
           ))}
@@ -104,7 +111,7 @@ export default function Home() {
 
       <section
         aria-labelledby="privacidade"
-        className="relative flex items-start gap-4 overflow-hidden rounded-3xl bg-pine-800 p-6 text-mint-50 shadow-[0_10px_28px_-14px_rgb(24_55_45/0.30)] sm:p-7"
+        className="relative overflow-hidden rounded-3xl bg-pine-800 px-6 py-6 text-left text-mint-50 shadow-[0_10px_28px_-14px_rgb(24_55_45/0.30)] sm:px-8 sm:py-7"
       >
         <svg
           viewBox="0 0 96 96"
@@ -118,16 +125,13 @@ export default function Home() {
           <path d="M54 50C44 56 34 55 30 48C38 43 47 44 54 50Z" fill="#C5A16B" />
           <path d="M72 64C78 54 77 44 70 39C65 48 66 57 72 64Z" fill="#C5A16B" />
         </svg>
-        <span className="relative flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-warm-white/10 text-gold-400">
-          <ShieldCheck className="h-5 w-5" aria-hidden="true" />
-        </span>
-        <div className="relative">
-          <h2 id="privacidade" className="font-bold text-warm-white">
-            Segredo guardado de verdade
+        <div className="relative max-w-prose">
+          <h2 id="privacidade" className="text-base font-bold text-warm-white sm:text-lg">
+            Privacidade do sorteio
           </h2>
-          <p className="mt-1 text-sm leading-relaxed text-mint-100">
-            O painel não mostra quem tirou quem. Cada participante acessa apenas o próprio ticket
-            por meio de um link individual.
+          <p className="mt-2.5 text-sm leading-relaxed text-mint-100">
+            Cada participante acessa apenas o próprio resultado pelo link individual. Os pares não
+            são exibidos no painel.
           </p>
         </div>
       </section>
