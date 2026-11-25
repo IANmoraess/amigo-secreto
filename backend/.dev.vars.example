@@ -1,0 +1,2 @@
+ADMIN_TOKEN=troque-por-um-segredo-forte-aqui
+ALLOWED_ORIGIN=http://localhost:5173

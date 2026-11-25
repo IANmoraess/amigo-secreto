@@ -1,0 +1,23 @@
+# Dependências
+node_modules/
+
+# Builds e saídas
+dist/
+build/
+coverage/
+
+# Cloudflare / Wrangler
+.wrangler/
+
+# Variáveis de ambiente e segredos locais
+.env
+.env.local
+.env.*.local
+.dev.vars
+.dev.vars.*
+!.env.example
+!.dev.vars.example
+
+# Logs e sistema
+*.log
+.DS_Store

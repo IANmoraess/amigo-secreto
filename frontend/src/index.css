@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta natalina discreta */
+  --color-pine-900: #143326;
+  --color-pine-800: #1B4332;
+  --color-pine-700: #2D6A4F;
+  --color-pine-100: #E9F5EC;
+  --color-pine-50: #F3FAF5;
+  --color-cream: #FAF8F5;
+  --color-berry-700: #991B1B;
+  --color-berry-600: #B91C1C;
+  --color-berry-50: #FEF2F2;
+  --color-gold-600: #B45309;
+  --color-gold-100: #FEF3C7;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-neutral-800 antialiased min-h-screen;
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--color-pine-700) 8%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+  }
+
+  /* Diálogos modais nativos: evita que a rolagem "vaze" para a página ao fundo. */
+  dialog:modal {
+    overscroll-behavior: contain;
+  }
+
+  dialog::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background-color: rgb(20 51 38 / 0.5);
+  }
+}
+
+@layer components {
+  /* Indicador de carregamento baseado no elemento nativo <progress> (indeterminado). */
+  .spinner {
+    --size: 1.25rem;
+    --thickness: 2px;
+
+    flex: none;
+    inline-size: var(--size);
+    block-size: var(--size);
+    border: 0;
+    border-radius: 50%;
+    appearance: none;
+    background: conic-gradient(
+      currentColor 0 30%,
+      color-mix(in srgb, currentColor 25%, transparent) 0
+    );
+    mask-image: radial-gradient(
+      farthest-side,
+      transparent calc(100% - var(--thickness)),
+      #000 calc(100% - var(--thickness))
+    );
+    animation: spinner-rotate 0.9s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation-duration: 6s;
+    }
+  }
+
+  .spinner:indeterminate::-webkit-progress-bar,
+  .spinner:indeterminate::-webkit-progress-value {
+    display: none;
+    background: none;
+  }
+
+  .spinner:indeterminate::-moz-progress-bar {
+    display: none;
+    background: none;
+  }
+
+  @media (forced-colors: active) {
+    .spinner {
+      forced-color-adjust: none;
+      color: CanvasText;
+    }
+  }
+
+  /* Tampa da caixa de presente: abre suavemente quando o resultado é revelado. */
+  .gift-lid {
+    transform-box: fill-box;
+    transform-origin: 20% 80%;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  }
+
+  .gift-lid-open {
+    transform: translateY(-14px) rotate(-10deg);
+  }
+
+  .gift-glow {
+    opacity: 0;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: opacity 0.45s ease-out;
+    }
+  }
+
+  .gift-glow-open {
+    opacity: 1;
+  }
+
+  /* Entrada suave de cartões e itens, respeitando prefers-reduced-motion. */
+  .reveal-card-enter {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: reveal-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+  }
+
+  .stagger-item {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: fade-slide-up 0.4s ease-out both;
+      animation-delay: calc(var(--stagger-index, 0) * 60ms);
+    }
+  }
+}
+
+@keyframes spinner-rotate {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@keyframes reveal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
