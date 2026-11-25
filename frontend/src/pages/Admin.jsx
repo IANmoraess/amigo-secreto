@@ -201,7 +201,7 @@ export default function Admin() {
 
       {!event ? (
         <>
-          <h1 className="text-2xl font-semibold text-pine-900">Painel do organizador</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-pine-900">Painel do organizador</h1>
           <EventSetup onCreate={handleCreate} onOpen={handleOpen} busy={busy} />
         </>
       ) : (

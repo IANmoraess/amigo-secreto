@@ -20,8 +20,10 @@ export default function EventSetup({ onCreate, onOpen, busy }) {
   return (
     <div className="grid gap-6">
       <Card>
-        <h2 id="create-event-title" className="flex items-center gap-2 text-xl font-semibold text-pine-900">
-          <CalendarPlus className="h-5 w-5" aria-hidden="true" />
+        <h2 id="create-event-title" className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-pine-900">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint-100 text-pine-800">
+            <CalendarPlus className="h-5 w-5" aria-hidden="true" />
+          </span>
           Criar novo evento
         </h2>
         <form onSubmit={handleCreate} aria-labelledby="create-event-title" className="mt-5 space-y-5">
@@ -48,8 +50,10 @@ export default function EventSetup({ onCreate, onOpen, busy }) {
       </Card>
 
       <Card>
-        <h2 id="open-event-title" className="flex items-center gap-2 text-xl font-semibold text-pine-900">
-          <FolderOpen className="h-5 w-5" aria-hidden="true" />
+        <h2 id="open-event-title" className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-pine-900">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gold-100 text-gold-600">
+            <FolderOpen className="h-5 w-5" aria-hidden="true" />
+          </span>
           Abrir evento existente
         </h2>
         <form onSubmit={handleOpen} aria-labelledby="open-event-title" className="mt-5 space-y-5">

@@ -17,10 +17,10 @@ export default function AdminLogin({ onSubmit, loading = false }) {
   return (
     <Card className="mx-auto max-w-md">
       <div className="mb-6 flex items-center gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-pine-100 text-pine-800">
+        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-mint-100 text-pine-800">
           <KeyRound className="h-5 w-5" aria-hidden="true" />
         </span>
-        <h1 id="admin-login-title" className="text-2xl font-semibold text-pine-900">
+        <h1 id="admin-login-title" className="text-2xl font-bold tracking-tight text-pine-900">
           Área do organizador
         </h1>
       </div>

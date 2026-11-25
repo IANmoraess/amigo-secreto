@@ -39,8 +39,10 @@ export default function ParticipantManager({ event, busy, onAdd, onRemove, onDra
   return (
     <>
       <Card>
-        <h2 id="add-participant-title" className="flex items-center gap-2 text-xl font-semibold text-pine-900">
-          <UserPlus className="h-5 w-5" aria-hidden="true" />
+        <h2 id="add-participant-title" className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-pine-900">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint-100 text-pine-800">
+            <UserPlus className="h-5 w-5" aria-hidden="true" />
+          </span>
           Cadastrar participante
         </h2>
         <form
@@ -73,28 +75,28 @@ export default function ParticipantManager({ event, busy, onAdd, onRemove, onDra
       </Card>
 
       <Card>
-        <h2 className="text-xl font-semibold text-pine-900">
+        <h2 className="text-xl font-bold tracking-tight text-pine-900">
           Participantes{' '}
-          <span className="text-base font-normal text-neutral-600">({participants.length})</span>
+          <span className="text-base font-medium text-neutral-500">({participants.length})</span>
         </h2>
 
         {participants.length === 0 ? (
           <p className="mt-4 text-neutral-600">Nenhum participante cadastrado ainda.</p>
         ) : (
-          <ul className="mt-4 divide-y divide-pine-100">
+          <ul className="mt-4 space-y-2">
             {participants.map((participant) => (
               <li
                 key={participant.id}
-                className="flex items-center justify-between gap-3 py-3"
+                className="flex items-center justify-between gap-3 rounded-2xl bg-cream/60 px-3.5 py-2.5"
               >
                 <span className="flex min-w-0 items-center gap-3">
                   <span
-                    className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-pine-100 text-sm font-semibold text-pine-800"
+                    className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-mint-100 text-sm font-bold text-pine-800"
                     aria-hidden="true"
                   >
                     {getInitial(participant.name)}
                   </span>
-                  <span className="break-words text-neutral-900">{participant.name}</span>
+                  <span className="font-medium break-words text-neutral-900">{participant.name}</span>
                 </span>
                 <Button
                   variant="ghost"
@@ -115,9 +117,11 @@ export default function ParticipantManager({ event, busy, onAdd, onRemove, onDra
       </Card>
 
       <Card>
-        <h2 className="flex items-center gap-2 text-xl font-semibold text-pine-900">
-          <Shuffle className="h-5 w-5" aria-hidden="true" />
-          Sorteio
+        <h2 className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-pine-900">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-berry-100 text-berry-600">
+            <Shuffle className="h-5 w-5" aria-hidden="true" />
+          </span>
+          Realizar sorteio
         </h2>
         <p id="draw-help" className="mt-2 text-sm text-neutral-600">
           {canDraw

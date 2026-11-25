@@ -7,77 +7,88 @@ import { buttonClasses } from '../components/Button.jsx';
 const STEPS = [
   {
     Icon: UserPlus,
+    badgeClasses: 'bg-mint-100 text-pine-800',
     title: 'Crie o evento',
-    text: 'O organizador dá um nome ao amigo secreto da turma.',
+    text: 'Escolha o nome da confraternização de Natal com a família ou amigos.',
   },
   {
     Icon: Users,
-    title: 'Cadastre os participantes',
-    text: 'Adicione todo mundo e confira a lista antes de sortear.',
+    badgeClasses: 'bg-gold-100 text-gold-600',
+    title: 'Adicione os participantes',
+    text: 'Cadastre todo mundo e confira a lista com calma antes de sortear.',
   },
   {
     Icon: Shuffle,
+    badgeClasses: 'bg-berry-100 text-berry-600',
     title: 'Realize o sorteio',
-    text: 'O sorteio acontece uma única vez, de forma segura e sem ninguém tirar a si mesmo.',
+    text: 'O sorteio acontece uma única vez e ninguém tira a si mesmo.',
   },
   {
     Icon: Send,
-    title: 'Envie os links',
-    text: 'Cada pessoa recebe um link individual e descobre só quem ela tirou.',
+    badgeClasses: 'bg-mint-100 text-pine-800',
+    title: 'Envie os links secretos',
+    text: 'Cada pessoa recebe seu link privado para abrir o próprio ticket.',
   },
 ];
 
 export default function Home() {
   return (
-    <div className="space-y-8 sm:space-y-10">
+    <div className="space-y-9 sm:space-y-11">
       <title>Amigo Secreto</title>
 
-      <Card className="relative overflow-hidden border-pine-700/15 text-center">
-        <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-pine-50 px-3 py-1 text-xs font-medium text-pine-800 border border-pine-100">
-          <Lock className="h-3.5 w-3.5 text-berry-600" aria-hidden="true" />
-          Sorteio privado e gratuito
-        </div>
+      <div>
+        <GiftIllustration
+          variant="trio"
+          className="relative z-0 mx-auto -mb-3.5 h-24 w-60 sm:h-28 sm:w-72"
+        />
 
-        <GiftIllustration className="mx-auto mt-4 h-28 w-28 sm:h-32 sm:w-32" />
+        <Card className="relative z-1 text-center">
+          <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-mint-50 px-3.5 py-1 text-xs font-semibold text-pine-800">
+            <Lock className="h-3.5 w-3.5 text-berry-600" aria-hidden="true" />
+            Amigo secreto de Natal · online e gratuito
+          </div>
 
-        <h1 className="mt-3 font-serif text-3xl font-semibold tracking-tight text-balance text-pine-900 sm:text-4xl">
-          Amigo Secreto
-        </h1>
-        <p className="mx-auto mt-3 max-w-prose text-pretty text-neutral-700">
-          Organize o sorteio com a família e os amigos, mesmo que cada um esteja em um lugar
-          diferente. Simples, gratuito e sem ninguém descobrir o segredo antes da hora.
-        </p>
-
-        <div className="mt-6 flex flex-col items-center gap-3">
-          <Link to="/admin" className={buttonClasses({ className: 'w-full sm:w-auto shadow-xs' })}>
-            <Sparkles className="h-4 w-4" aria-hidden="true" />
-            Acessar área do organizador
-          </Link>
-          <p className="text-xs text-neutral-600">
-            Já é participante? Abra o link individual enviado pelo organizador.
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-balance text-pine-900 sm:text-4xl">
+            Organize seu Amigo Secreto sem estresse
+          </h1>
+          <p className="mx-auto mt-3 max-w-prose text-pretty text-neutral-600">
+            Reúna quem você ama mesmo à distância. Crie o grupo, faça o sorteio em segundos e
+            envie um link secreto para cada participante.
           </p>
-        </div>
-      </Card>
+
+          <div className="mt-6 flex flex-col items-center gap-3">
+            <Link to="/admin" className={buttonClasses({ className: 'w-full sm:w-auto' })}>
+              <Sparkles className="h-4 w-4" aria-hidden="true" />
+              Acessar área do organizador
+            </Link>
+            <p className="text-xs text-neutral-500">
+              Recebeu um link? Basta abri-lo para descobrir quem você tirou.
+            </p>
+          </div>
+        </Card>
+      </div>
 
       <section aria-labelledby="como-funciona">
-        <h2 id="como-funciona" className="font-serif text-xl font-semibold text-pine-900 sm:text-2xl">
+        <h2 id="como-funciona" className="text-xl font-bold tracking-tight text-pine-900 sm:text-2xl">
           Como funciona
         </h2>
-        <ol className="mt-4 grid gap-3.5 sm:grid-cols-2 sm:gap-4">
-          {STEPS.map(({ Icon, title, text }, index) => (
+        <ol className="mt-4 grid gap-4 sm:grid-cols-2">
+          {STEPS.map(({ Icon, badgeClasses, title, text }, index) => (
             <li
               key={title}
               style={{ '--stagger-index': index }}
-              className="stagger-item flex gap-4 rounded-2xl border border-pine-100 bg-white p-5 shadow-xs"
+              className="stagger-item flex gap-4 rounded-3xl bg-white p-5 shadow-[0_6px_22px_-12px_rgb(15_61_46/0.10)]"
             >
-              <div className="relative flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-pine-100 text-pine-800">
+              <div
+                className={`relative flex h-12 w-12 flex-none items-center justify-center rounded-2xl ${badgeClasses}`}
+              >
                 <Icon className="h-5 w-5" aria-hidden="true" />
-                <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-berry-600 text-[11px] font-bold text-white">
+                <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-pine-800 text-[11px] font-bold text-white">
                   {index + 1}
                 </span>
               </div>
               <div>
-                <h3 className="font-semibold text-neutral-900">
+                <h3 className="font-bold text-pine-900">
                   <span className="sr-only">Passo {index + 1}: </span>
                   {title}
                 </h3>
@@ -90,18 +101,18 @@ export default function Home() {
 
       <section
         aria-labelledby="privacidade"
-        className="flex items-start gap-4 rounded-2xl bg-pine-800 p-6 text-pine-50 shadow-sm"
+        className="flex items-start gap-4 rounded-3xl bg-gradient-to-br from-pine-900 to-pine-800 p-6 text-mint-50 shadow-[0_10px_28px_-12px_rgb(15_61_46/0.35)] sm:p-7"
       >
-        <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-pine-700/70 text-white">
+        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-white/12 text-gold-400">
           <ShieldCheck className="h-5 w-5" aria-hidden="true" />
         </span>
         <div>
-          <h2 id="privacidade" className="font-semibold text-white">
-            Privacidade em primeiro lugar
+          <h2 id="privacidade" className="font-bold text-white">
+            Segredo guardado de verdade
           </h2>
-          <p className="mt-1 text-sm leading-relaxed text-pine-100">
-            Nem o organizador sabe quem tirou quem. Cada participante vê apenas o próprio
-            resultado, usando um link secreto e individual.
+          <p className="mt-1 text-sm leading-relaxed text-mint-100">
+            O painel não mostra quem tirou quem. Cada participante acessa apenas o próprio ticket
+            por meio de um link individual.
           </p>
         </div>
       </section>

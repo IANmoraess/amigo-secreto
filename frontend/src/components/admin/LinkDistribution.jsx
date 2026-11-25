@@ -38,8 +38,10 @@ export default function LinkDistribution({ links, onFinish }) {
   return (
     <Card className="space-y-6">
       <div>
-        <h2 className="flex items-center gap-2 text-xl font-semibold text-pine-900">
-          <Send className="h-5 w-5" aria-hidden="true" />
+        <h2 className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-pine-900">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint-100 text-pine-800">
+            <Send className="h-5 w-5" aria-hidden="true" />
+          </span>
           Distribuição dos links individuais
         </h2>
         <p className="mt-2 text-sm text-neutral-600">
@@ -62,7 +64,7 @@ export default function LinkDistribution({ links, onFinish }) {
           <span className="text-pine-700">{progressPercent}%</span>
         </div>
         <div
-          className="h-2.5 w-full overflow-hidden rounded-full bg-pine-100"
+          className="h-2.5 w-full overflow-hidden rounded-full bg-mint-100"
           role="progressbar"
           aria-valuenow={copiedCount}
           aria-valuemin={0}
@@ -82,10 +84,8 @@ export default function LinkDistribution({ links, onFinish }) {
           return (
             <li
               key={link.participantId}
-              className={`flex flex-col gap-3 rounded-xl border p-3.5 transition-colors sm:flex-row sm:items-center sm:justify-between ${
-                copied
-                  ? 'border-pine-700/25 bg-pine-50/70'
-                  : 'border-pine-100 bg-white'
+              className={`flex flex-col gap-3 rounded-2xl p-3.5 transition-colors sm:flex-row sm:items-center sm:justify-between ${
+                copied ? 'bg-mint-50' : 'bg-cream/65'
               }`}
             >
               <span className="flex items-center gap-2.5 break-words font-medium text-neutral-900">

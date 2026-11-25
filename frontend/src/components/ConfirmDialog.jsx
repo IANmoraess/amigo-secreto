@@ -49,9 +49,9 @@ export default function ConfirmDialog({
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       onClose={handleClose}
-      className="m-auto w-[calc(100%-2rem)] max-w-md rounded-2xl bg-white p-6 text-neutral-800 shadow-xl sm:p-8"
+      className="m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl bg-white p-6 text-neutral-800 shadow-xl sm:p-8"
     >
-      <h1 id={titleId} className="text-xl font-semibold text-pine-900">
+      <h1 id={titleId} className="text-xl font-bold tracking-tight text-pine-900">
         {title}
       </h1>
       <div id={descriptionId} className="mt-3 space-y-2 text-sm text-neutral-700">

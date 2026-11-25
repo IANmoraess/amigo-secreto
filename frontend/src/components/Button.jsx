@@ -2,20 +2,20 @@ import Spinner from './Spinner.jsx';
 
 const VARIANTS = {
   primary: 'bg-pine-800 text-white hover:bg-pine-900',
-  secondary: 'border border-pine-700/30 bg-white text-pine-800 hover:bg-pine-50',
+  secondary: 'bg-mint-50 text-pine-900 hover:bg-mint-100',
   danger: 'bg-berry-600 text-white hover:bg-berry-700',
-  ghost: 'text-pine-800 hover:bg-pine-100',
+  ghost: 'text-pine-800 hover:bg-mint-100',
 };
 
 const SIZES = {
-  md: 'min-h-12 px-5 text-base',
-  sm: 'min-h-11 px-3 text-sm',
+  md: 'min-h-12 px-6 text-base',
+  sm: 'min-h-11 px-3.5 text-sm',
 };
 
 /** Classes compartilhadas entre <button> e links com aparência de botão. */
 export function buttonClasses({ variant = 'primary', size = 'md', className = '' } = {}) {
   return [
-    'inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-colors',
+    'inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-colors',
     'focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-pine-700',
     'disabled:cursor-not-allowed disabled:opacity-60',
     VARIANTS[variant],
