@@ -54,6 +54,9 @@ export const adminApi = {
   /** GET /api/admin/verify -> { ok: true } */
   verify: (adminKey) => request('/api/admin/verify', { adminKey }),
 
+  /** GET /api/admin/events -> { events } */
+  listEvents: (adminKey) => request('/api/admin/events', { adminKey }),
+
   /** POST /api/admin/events -> { event } */
   createEvent: (adminKey, name) =>
     request('/api/admin/events', { method: 'POST', body: { name }, adminKey }),

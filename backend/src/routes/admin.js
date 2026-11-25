@@ -4,6 +4,7 @@ import {
   createEventService,
   executeEventDrawService,
   getEventService,
+  listEventsService,
   removeParticipantService,
 } from '../services/eventService.js';
 import {
@@ -26,6 +27,12 @@ adminRoutes.post('/events', async (c) => {
   const name = validateEventName(body.name);
   const result = await createEventService(c.env.DB, name);
   return c.json(result, 201);
+});
+
+// GET /api/admin/events - Lista eventos salvos no banco sem expor resultados
+adminRoutes.get('/events', async (c) => {
+  const result = await listEventsService(c.env.DB);
+  return c.json(result);
 });
 
 // GET /api/admin/events/:id - Consulta evento e participantes sem expor resultados

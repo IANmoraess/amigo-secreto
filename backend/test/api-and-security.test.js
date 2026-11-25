@@ -350,4 +350,39 @@ describe('API e Segurança (rotas administrativas e individuais)', () => {
       .get(eventId);
     expect(drawCountRow.count).toBe(3);
   });
+
+  it('aplica rate limit global de 1 minuto para impedir sobrecarga no servidor', async () => {
+    const ip = '203.0.113.77';
+    let lastRes = null;
+    for (let i = 0; i < 101; i += 1) {
+      lastRes = await apiRequest(env, '/api/health', { ip });
+    }
+    expect(lastRes.response.status).toBe(429);
+    const retryAfter = Number(lastRes.response.headers.get('Retry-After'));
+    expect(retryAfter).toBeGreaterThanOrEqual(1);
+    expect(retryAfter).toBeLessThanOrEqual(60);
+  });
+
+  it('lista eventos salvos no banco para o organizador sem expor dados sensíveis', async () => {
+    const created = await apiRequest(env, '/api/admin/events', {
+      method: 'POST',
+      token: ADMIN_TOKEN,
+      body: { name: 'Evento Listado' },
+    });
+    const eventId = created.data.event.id;
+
+    await apiRequest(env, `/api/admin/events/${eventId}/participants`, {
+      method: 'POST',
+      token: ADMIN_TOKEN,
+      body: { name: 'Ana' },
+    });
+
+    const listRes = await apiRequest(env, '/api/admin/events', { token: ADMIN_TOKEN });
+    expect(listRes.response.status).toBe(200);
+    const listed = listRes.data.events.find((item) => item.id === eventId);
+    expect(listed).toBeDefined();
+    expect(listed.name).toBe('Evento Listado');
+    expect(listed.status).toBe('draft');
+    expect(listed.participantCount).toBe(1);
+  });
 });

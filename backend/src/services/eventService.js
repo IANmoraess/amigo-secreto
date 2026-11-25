@@ -7,6 +7,7 @@ import {
   buildMarkCompletedStatement,
   createEvent,
   findEventById,
+  listEvents,
 } from '../repositories/eventRepository.js';
 import {
   buildAssignTokenHashStatement,
@@ -54,6 +55,20 @@ export async function getEventService(db, eventId) {
   const event = await requireEvent(db, eventId);
   const participants = await listParticipantsByEvent(db, eventId);
   return { event: formatEvent(event, participants) };
+}
+
+export async function listEventsService(db) {
+  const rows = await listEvents(db);
+  return {
+    events: rows.map((event) => ({
+      id: event.id,
+      name: event.name,
+      status: event.status,
+      createdAt: event.created_at,
+      drawnAt: event.drawn_at ?? null,
+      participantCount: Number(event.participant_count ?? 0),
+    })),
+  };
 }
 
 export async function addParticipantService(db, eventId, name) {

@@ -34,6 +34,8 @@ function runWithViewTransition(update) {
 export default function Admin() {
   const [adminKey, setAdminKey] = useState(null);
   const [event, setEvent] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [loadingEvents, setLoadingEvents] = useState(false);
   const [links, setLinks] = useState(null);
   const [busy, setBusy] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -58,6 +60,7 @@ export default function Admin() {
       timerId = setTimeout(() => {
         setAdminKey(null);
         setEvent(null);
+        setEvents([]);
         setFeedback({
           type: 'info',
           message: 'Sessão encerrada por inatividade. Informe a chave administrativa novamente.',
@@ -75,6 +78,34 @@ export default function Admin() {
       window.removeEventListener('keydown', resetTimer);
     };
   }, [adminKey, links]);
+
+  // Carrega a lista de eventos salvos no banco ao abrir o painel ou trocar de evento.
+  useEffect(() => {
+    if (!adminKey || event) return undefined;
+    let active = true;
+    setLoadingEvents(true);
+    adminApi
+      .listEvents(adminKey)
+      .then((data) => {
+        if (active) setEvents(data.events ?? []);
+      })
+      .catch((error) => {
+        if (!active) return;
+        if (error?.status === 401) {
+          setAdminKey(null);
+          setEvents([]);
+          setFeedback({ type: 'error', message: 'Chave administrativa inválida. Entre novamente.' });
+        } else {
+          setFeedback({ type: 'error', message: getErrorMessage(error) });
+        }
+      })
+      .finally(() => {
+        if (active) setLoadingEvents(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [adminKey, event]);
 
   /** Executa uma operação na API, controlando carregamento e mensagens. */
   async function run(busyKey, operation, successMessage) {
@@ -157,6 +188,7 @@ export default function Admin() {
     runWithViewTransition(() => {
       setAdminKey(null);
       setEvent(null);
+      setEvents([]);
       setFeedback(null);
     });
   }
@@ -202,7 +234,13 @@ export default function Admin() {
       {!event ? (
         <>
           <h1 className="text-2xl font-bold tracking-tight text-pine-900">Painel do organizador</h1>
-          <EventSetup onCreate={handleCreate} onOpen={handleOpen} busy={busy} />
+          <EventSetup
+            events={events}
+            loadingEvents={loadingEvents}
+            onCreate={handleCreate}
+            onOpen={handleOpen}
+            busy={busy}
+          />
         </>
       ) : (
         <>

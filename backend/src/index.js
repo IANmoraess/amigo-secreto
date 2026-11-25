@@ -6,6 +6,7 @@ import adminRoutes from './routes/admin.js';
 import sorteioRoutes from './routes/sorteio.js';
 
 const app = new Hono();
+const globalRateLimit = createRateLimiter({ scope: 'global', windowMs: 60_000, max: 100 });
 const adminRateLimit = createRateLimiter({ scope: 'admin', windowMs: 60_000, max: 60 });
 const adminVerifyRateLimit = createRateLimiter({ scope: 'admin-verify', windowMs: 60_000, max: 10 });
 const sorteioRateLimit = createRateLimiter({ scope: 'sorteio', windowMs: 60_000, max: 30 });
@@ -48,6 +49,9 @@ app.use('/api/*', async (c, next) => {
 
   return corsMiddleware(c, next);
 });
+
+// Rate limit global de 1 minuto para impedir sobrecarga em qualquer rota
+app.use('*', globalRateLimit);
 
 // Rota de verificação de saúde do Worker
 app.get('/api/health', (c) => {
