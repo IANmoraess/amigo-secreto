@@ -1,34 +1,78 @@
 @import "tailwindcss";
 
 @theme {
-  /* Paleta natalina Modern Flat */
-  --color-pine-900: #0F3D2E;
-  --color-pine-800: #16523E;
-  --color-pine-700: #1F6E53;
-  --color-pine-600: #2A8868;
-  --color-pine-100: #E3F7ED;
-  --color-pine-50: #F2FBF6;
+  /* Paleta principal natalina — Modern Flat */
+  --color-cream: #F4F0E8;          /* Warm Ivory — fundo principal */
+  --color-cream-light: #F7F3EA;    /* Variação sutil de fundo */
+  --color-warm-white: #FFFCF7;     /* Warm White — superfícies e áreas de conteúdo */
+  --color-charcoal: #303832;       /* Charcoal — textos principais */
+  --color-charcoal-soft: #59635B;  /* Texto secundário com contraste confortável */
 
-  --color-mint-200: #BFEBD6;
-  --color-mint-100: #E3F7ED;
-  --color-mint-50: #F2FBF6;
+  --color-pine-900: #18372D;       /* Deep Pine — elementos estruturais e destaques escuros */
+  --color-pine-800: #244638;       /* Forest Green — identidade principal */
+  --color-pine-700: #2F5947;       /* Tom harmônico intermediário */
+  --color-pine-600: #3E6D59;
+  --color-pine-100: #E4EAE0;
+  --color-pine-50: #EFF3EC;
 
-  --color-berry-700: #9E1F2C;
-  --color-berry-600: #C62B3A;
-  --color-berry-100: #FDE8EA;
-  --color-berry-50: #FFF4F5;
+  --color-sage: #A9B7A0;           /* Muted Sage — elementos secundários */
+  --color-mint-200: #C6D1BF;
+  --color-mint-100: #E4EAE0;
+  --color-mint-50: #EFF3EC;
 
-  --color-gold-600: #B7791F;
-  --color-gold-500: #E5A93B;
-  --color-gold-400: #F4C45D;
-  --color-gold-100: #FEF5DC;
+  --color-berry-700: #8B2F37;      /* Cranberry escuro — hover e texto com contraste */
+  --color-berry-600: #A83D46;      /* Cranberry — detalhes natalinos */
+  --color-berry-100: #F4DFE1;
+  --color-berry-50: #FAF0F1;
 
-  --color-cream: #F7F5F0;
+  --color-gold-600: #8F6D3B;       /* Antique Gold escuro — texto/ícones sobre fundo claro */
+  --color-gold-500: #C5A16B;       /* Antique Gold — pequenos detalhes e acabamentos */
+  --color-gold-400: #D7B98A;
+  --color-gold-100: #F5ECD9;
+
+  /* Hierarquia de cores dos botões */
+  --color-btn-cranberry: #C7474F;
+  --color-btn-cranberry-hover: #B13B43;
+  --color-btn-cranberry-active: #9A3138;
+
+  --color-btn-gold: #D99A35;
+  --color-btn-gold-hover: #C48828;
+  --color-btn-gold-active: #AE761F;
+
+  --color-btn-festive: #347653;
+  --color-btn-festive-hover: #2B6345;
+  --color-btn-festive-active: #225037;
+
+  --color-btn-coral: #E87954;
+  --color-btn-coral-hover: #D86944;
+  --color-btn-coral-active: #C35836;
+
+  /* Componentes informativos (Alert) */
+  --color-alert-success-bg: #E3EBDD;
+  --color-alert-success-text: #244638;
+  --color-alert-success-icon: #28613F;
+
+  --color-alert-info-bg: #E5EBF0;
+  --color-alert-info-text: #294B61;
+  --color-alert-info-icon: #365F7A;
+
+  --color-alert-warning-bg: #F6EBD7;
+  --color-alert-warning-text: #755522;
+  --color-alert-warning-icon: #94651F;
+
+  --color-alert-error-bg: #F4E1DF;
+  --color-alert-error-text: #814047;
+  --color-alert-error-icon: #A83D46;
 }
 
 @layer base {
   body {
-    @apply bg-cream text-neutral-800 antialiased min-h-screen;
+    @apply bg-cream text-charcoal antialiased min-h-screen;
+    background-image: radial-gradient(
+      ellipse 80% 45% at 50% 0%,
+      var(--color-cream-light) 0%,
+      var(--color-cream) 72%
+    );
   }
 
   /* Diálogos modais nativos: evita que a rolagem "vaze" para a página ao fundo. */
@@ -39,7 +83,7 @@
   dialog::backdrop {
     overflow: hidden;
     overscroll-behavior: contain;
-    background-color: rgb(15 61 46 / 0.45);
+    background-color: rgb(24 55 45 / 0.45);
   }
 }
 
@@ -89,7 +133,7 @@
     }
   }
 
-  /* Tampa do presente principal: levanta suavemente quando revelado. */
+  /* Animação simples da variante compacta/trio */
   .gift-lid {
     transform-box: fill-box;
     transform-origin: 20% 80%;
@@ -115,17 +159,249 @@
     opacity: 1;
   }
 
-  /* Entrada suave do ticket de sorteio e confetes decorativos. */
-  .ticket-reveal {
+  /* =========================================================================
+   * Presente protagonista da tela de revelação (estados: idle, charging, opened)
+   * ========================================================================= */
+  .gift-hero-box {
+    transform-box: fill-box;
+    transform-origin: 50% 95%;
+  }
+
+  .gift-hero-shadow {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+  }
+
+  .gift-hero-lid {
+    transform-box: fill-box;
+    transform-origin: 18% 85%;
+  }
+
+  .gift-hero-seam {
+    opacity: 0;
+    transition: opacity 0.22s ease;
+  }
+
+  .gift-light-charge-leak {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    opacity: 0;
+  }
+
+  .gift-light-shaft {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    opacity: 0;
+  }
+
+  .gift-light-column,
+  .gift-light-edges,
+  .gift-light-core,
+  .gift-light-mouth {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+  }
+
+  .gift-light-streak {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    opacity: 0.45;
+  }
+
+  .gift-light-flash {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    opacity: 0;
+  }
+
+  .gift-hero-spark {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    opacity: 0;
+  }
+
+  .gift-hero-ember {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    opacity: 0;
+  }
+
+  .gift-hero-twinkle {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    opacity: 0;
+  }
+
+  /* Estado 1: fechado — sem halo lateral, apenas balanço e expectativa sutil */
+  .gift-state-idle .gift-hero-box {
     @media (prefers-reduced-motion: no-preference) {
-      animation: ticket-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: gift-idle-hop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
   }
 
-  .confetti-piece {
+  .gift-state-idle .gift-hero-lid {
     @media (prefers-reduced-motion: no-preference) {
-      animation: confetti-pop 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-      animation-delay: calc(var(--confetti-delay, 0) * 55ms);
+      animation: gift-lid-nudge 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  }
+
+  .gift-state-idle .gift-hero-shadow {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-shadow-hop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  }
+
+  .gift-state-idle .gift-hero-seam {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-seam-pulse 3.4s ease-in-out infinite;
+    }
+  }
+
+  /* Ao passar o cursor ou focar no presente fechado, a vibração fica imediatamente mais intensa */
+  .group:hover .gift-state-idle .gift-hero-box,
+  .group:has(:focus-visible) .gift-state-idle .gift-hero-box {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-hover-rumble 0.65s ease-in-out infinite;
+    }
+  }
+
+  .group:hover .gift-state-idle .gift-hero-lid,
+  .group:has(:focus-visible) .gift-state-idle .gift-hero-lid {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-lid-rumble 0.65s ease-in-out infinite;
+    }
+  }
+
+  .group:hover .gift-state-idle .gift-hero-seam,
+  .group:has(:focus-visible) .gift-state-idle .gift-hero-seam {
+    animation: none;
+    opacity: 0.72;
+  }
+
+  /* Estado 2: preparando abertura (1,35s) — balanço acelera em tremor progressivo com luz escapando na fresta */
+  .gift-state-charging .gift-hero-box {
+    @media (prefers-reduced-motion: no-preference) {
+      animation:
+        gift-charging-buildup 1.35s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+        gift-charging-hold 0.14s ease-in-out 1.35s infinite;
+    }
+  }
+
+  .gift-state-charging .gift-hero-lid {
+    @media (prefers-reduced-motion: no-preference) {
+      animation:
+        gift-lid-buildup 1.35s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+        gift-lid-rumble 0.14s ease-in-out 1.35s infinite;
+    }
+  }
+
+  .gift-state-charging .gift-hero-shadow {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-shadow-charge 1.35s ease-out forwards;
+    }
+  }
+
+  .gift-state-charging .gift-hero-seam {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-seam-charge 1.35s ease-in forwards;
+    }
+    opacity: 1;
+  }
+
+  .gift-state-charging .gift-light-charge-leak {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-charge-leak-rise 1.35s ease-in forwards;
+    }
+  }
+
+  /* Estado 3: aberto — tampa salta, projeção vertical de luz irrompe em flash recortado às bordas e pulsa em loop */
+  .gift-state-opened .gift-hero-box {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-open-rebound 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+  }
+
+  .gift-state-opened .gift-hero-lid {
+    transform: translate(-11px, -27px) rotate(-20deg);
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-lid-pop 0.68s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+  }
+
+  .gift-state-opened .gift-light-shaft {
+    opacity: 1;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-shaft-emerge 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+  }
+
+  .gift-state-opened .gift-light-column {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-column-breathe 3.2s ease-in-out 0.65s infinite;
+    }
+  }
+
+  .gift-state-opened .gift-light-core {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-core-breathe 2.6s ease-in-out 0.65s infinite;
+    }
+  }
+
+  .gift-state-opened .gift-light-mouth {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-core-breathe 2.2s ease-in-out 0.65s infinite;
+    }
+  }
+
+  .gift-state-opened .gift-light-streak-a {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-streak-shimmer 2.4s ease-in-out 0.55s infinite;
+    }
+  }
+
+  .gift-state-opened .gift-light-streak-b {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-streak-shimmer 2.9s ease-in-out 0.75s infinite;
+    }
+  }
+
+  .gift-state-opened .gift-light-streak-c {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-streak-shimmer 2.6s ease-in-out 1.05s infinite;
+    }
+  }
+
+  .gift-state-opened .gift-light-flash {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-opening-flash-surge 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+  }
+
+  .gift-state-opened .gift-hero-spark {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-spark-fly 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: var(--spark-delay, 0ms);
+    }
+  }
+
+  .gift-state-opened .gift-hero-ember {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-ember-rise var(--ember-dur, 2.8s) ease-out var(--ember-delay, 0s) infinite;
+    }
+  }
+
+  .gift-state-opened .gift-hero-twinkle {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-star-twinkle var(--twinkle-dur, 2.6s) ease-in-out var(--twinkle-delay, 0s) infinite;
+    }
+  }
+
+  /* Entrada suave do ticket de sorteio logo após a abertura da tampa */
+  .ticket-reveal {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: ticket-enter 0.56s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
     }
   }
 
@@ -143,21 +419,462 @@
   }
 }
 
-@keyframes ticket-enter {
-  from {
-    opacity: 0;
-    transform: translateY(1.25rem) scale(0.95);
+/* Balanço inicial -> salto suave -> tremor progressivo acumulando energia -> pequeno salto final */
+@keyframes gift-idle-hop {
+  0%,
+  12%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1, 1);
   }
-  to {
-    opacity: 1;
-    transform: none;
+  18% {
+    transform: translateY(0) rotate(-2.2deg) scale(1.01, 0.99);
+  }
+  25% {
+    transform: translateY(0) rotate(2.2deg) scale(1.01, 0.99);
+  }
+  31% {
+    transform: translateY(2px) rotate(-1deg) scale(1.03, 0.96);
+  }
+  37% {
+    transform: translateY(-7px) rotate(-3deg) scale(0.98, 1.03);
+  }
+  43% {
+    transform: translateY(1px) rotate(2deg) scale(1.02, 0.98);
+  }
+  /* Tremor progressivo ganhando intensidade e velocidade */
+  50% {
+    transform: translateY(1.5px) rotate(-2.2deg) scale(1.03, 0.965);
+  }
+  54% {
+    transform: translateY(2px) rotate(2.6deg) scale(1.035, 0.96);
+  }
+  58% {
+    transform: translateY(2.5px) rotate(-3.2deg) scale(1.045, 0.95);
+  }
+  62% {
+    transform: translateY(2.8px) rotate(3.6deg) scale(1.05, 0.94);
+  }
+  65% {
+    transform: translateY(3px) rotate(-4deg) scale(1.055, 0.935);
+  }
+  68% {
+    transform: translateY(3px) rotate(4deg) scale(1.06, 0.93);
+  }
+  71% {
+    transform: translateY(3.2px) rotate(-3.5deg) scale(1.06, 0.93);
+  }
+  /* Liberação rápida em pequeno salto cheio de energia */
+  77% {
+    transform: translateY(-10px) rotate(2.4deg) scale(0.965, 1.045);
+  }
+  84% {
+    transform: translateY(1.5px) rotate(-1.2deg) scale(1.02, 0.98);
+  }
+  91% {
+    transform: translateY(0) rotate(0.5deg) scale(1, 1);
   }
 }
 
-@keyframes confetti-pop {
+@keyframes gift-lid-nudge {
+  0%,
+  33%,
+  84%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  38% {
+    transform: translateY(-3.5px) rotate(-2.5deg);
+  }
+  44% {
+    transform: translateY(0) rotate(0.8deg);
+  }
+  54% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+  59% {
+    transform: translateY(-3px) rotate(-2.8deg);
+  }
+  64% {
+    transform: translateY(-4px) rotate(3.2deg);
+  }
+  69% {
+    transform: translateY(-5px) rotate(-3.6deg);
+  }
+  77% {
+    transform: translateY(-6.5px) rotate(3deg);
+  }
+}
+
+@keyframes gift-seam-pulse {
+  0%,
+  46%,
+  84%,
+  100% {
+    opacity: 0;
+  }
+  58% {
+    opacity: 0.35;
+  }
+  70% {
+    opacity: 0.85;
+  }
+  76% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes gift-shadow-hop {
+  0%,
+  12%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.14;
+  }
+  31% {
+    transform: scaleX(1.05);
+    opacity: 0.17;
+  }
+  37% {
+    transform: scaleX(0.85);
+    opacity: 0.09;
+  }
+  50%,
+  71% {
+    transform: scaleX(1.07);
+    opacity: 0.19;
+  }
+  77% {
+    transform: scaleX(0.78);
+    opacity: 0.08;
+  }
+  84% {
+    transform: scaleX(1.03);
+    opacity: 0.16;
+  }
+}
+
+@keyframes gift-hover-rumble {
+  0%,
+  100% {
+    transform: translateY(2px) rotate(0deg) scale(1.04, 0.95);
+  }
+  20% {
+    transform: translateY(2.5px) rotate(-3deg) scale(1.05, 0.94);
+  }
+  40% {
+    transform: translateY(2px) rotate(3.2deg) scale(1.05, 0.94);
+  }
+  60% {
+    transform: translateY(2.8px) rotate(-3.8deg) scale(1.06, 0.93);
+  }
+  80% {
+    transform: translateY(2.5px) rotate(3.5deg) scale(1.055, 0.935);
+  }
+}
+
+@keyframes gift-lid-rumble {
+  0%,
+  100% {
+    transform: translateY(-1.5px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-4.5px) rotate(-3.2deg);
+  }
+  50% {
+    transform: translateY(-2.5px) rotate(2.8deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-2.5deg);
+  }
+}
+
+/* Progressão de 1,35s: balanço inicial -> pequenos saltos -> vibrações cada vez mais rápidas e intensas */
+@keyframes gift-charging-buildup {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1, 1);
+  }
+  8% {
+    transform: translateY(1px) rotate(-2.2deg) scale(1.015, 0.985);
+  }
+  16% {
+    transform: translateY(1px) rotate(2.4deg) scale(1.02, 0.98);
+  }
+  24% {
+    transform: translateY(-4px) rotate(-2.8deg) scale(0.985, 1.025);
+  }
+  32% {
+    transform: translateY(1.5px) rotate(2.8deg) scale(1.03, 0.97);
+  }
+  40% {
+    transform: translateY(2px) rotate(-3.4deg) scale(1.04, 0.955);
+  }
+  48% {
+    transform: translateY(2.2px) rotate(3.8deg) scale(1.045, 0.95);
+  }
+  55% {
+    transform: translateY(2.4px) rotate(-4.2deg) scale(1.055, 0.94);
+  }
+  62% {
+    transform: translateY(2.6px) rotate(4.5deg) scale(1.06, 0.935);
+  }
+  68% {
+    transform: translateY(2.8px) rotate(-4.8deg) scale(1.065, 0.925);
+  }
+  74% {
+    transform: translateY(3px) rotate(5.1deg) scale(1.07, 0.92);
+  }
+  80% {
+    transform: translateY(3.1px) rotate(-5.4deg) scale(1.075, 0.915);
+  }
+  85% {
+    transform: translateY(3.3px) rotate(5.5deg) scale(1.078, 0.91);
+  }
+  90% {
+    transform: translateY(3.4px) rotate(-5.2deg) scale(1.08, 0.905);
+  }
+  95% {
+    transform: translateY(3.5px) rotate(4.2deg) scale(1.082, 0.9);
+  }
+  100% {
+    transform: translateY(3.5px) rotate(0deg) scale(1.085, 0.895);
+  }
+}
+
+@keyframes gift-charging-hold {
+  0%,
+  100% {
+    transform: translateY(3.5px) rotate(-4.8deg) scale(1.085, 0.895);
+  }
+  50% {
+    transform: translateY(3.5px) rotate(4.8deg) scale(1.085, 0.895);
+  }
+}
+
+@keyframes gift-lid-buildup {
+  0%,
+  18% {
+    transform: translateY(0) rotate(0deg);
+  }
+  26% {
+    transform: translateY(-2px) rotate(-1.5deg);
+  }
+  38% {
+    transform: translateY(-1.5px) rotate(1.8deg);
+  }
+  52% {
+    transform: translateY(-3px) rotate(-2.5deg);
+  }
+  66% {
+    transform: translateY(-4.5px) rotate(3deg);
+  }
+  78% {
+    transform: translateY(-6px) rotate(-3.5deg);
+  }
+  89% {
+    transform: translateY(-7.5px) rotate(3.6deg);
+  }
+  100% {
+    transform: translateY(-7px) rotate(0deg);
+  }
+}
+
+@keyframes gift-shadow-charge {
+  0% {
+    transform: scaleX(1);
+    opacity: 0.14;
+  }
+  24% {
+    transform: scaleX(0.92);
+    opacity: 0.11;
+  }
+  100% {
+    transform: scaleX(1.1);
+    opacity: 0.22;
+  }
+}
+
+@keyframes gift-seam-charge {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.25;
+  }
+  65% {
+    opacity: 0.72;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes gift-charge-leak-rise {
+  0%,
+  55% {
+    opacity: 0;
+    transform: scaleY(0.1);
+  }
+  80% {
+    opacity: 0.55;
+    transform: scaleY(0.55);
+  }
+  100% {
+    opacity: 0.95;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes gift-open-rebound {
+  0% {
+    transform: translateY(3.5px) scale(1.085, 0.895);
+  }
+  36% {
+    transform: translateY(-8px) scale(0.955, 1.055);
+  }
+  70% {
+    transform: translateY(1.5px) scale(1.015, 0.985);
+  }
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@keyframes gift-lid-pop {
+  0% {
+    transform: translate(0, -7px) rotate(0deg);
+  }
+  42% {
+    transform: translate(-15px, -37px) rotate(-25deg);
+  }
+  74% {
+    transform: translate(-10px, -25px) rotate(-18deg);
+  }
+  100% {
+    transform: translate(-11px, -27px) rotate(-20deg);
+  }
+}
+
+@keyframes gift-shaft-emerge {
+  0% {
+    opacity: 0.35;
+    transform: scaleY(0.16);
+  }
+  45% {
+    opacity: 1;
+    transform: scaleY(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes gift-opening-flash-surge {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.2);
+  }
+  26% {
+    opacity: 0.85;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(1.02);
+  }
+}
+
+@keyframes gift-column-breathe {
+  0%,
+  100% {
+    opacity: 0.92;
+    transform: scaleY(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.02);
+  }
+}
+
+@keyframes gift-core-breathe {
+  0%,
+  100% {
+    opacity: 0.88;
+    transform: scaleY(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.03);
+  }
+}
+
+@keyframes gift-streak-shimmer {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: scaleY(0.92);
+  }
+  50% {
+    opacity: 0.78;
+    transform: scaleY(1.02);
+  }
+}
+
+@keyframes gift-ember-rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 4px) scale(0.45);
+  }
+  18% {
+    opacity: 0.95;
+    transform: translate(
+      calc(var(--ember-x, 0px) * 0.25 + var(--ember-sway, 0px)),
+      calc(var(--ember-y, -60px) * 0.24)
+    ) scale(1.08);
+  }
+  58% {
+    opacity: 0.88;
+    transform: translate(
+      calc(var(--ember-x, 0px) * 0.72 - var(--ember-sway, 0px) * 0.65),
+      calc(var(--ember-y, -60px) * 0.68)
+    ) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--ember-x, 0px), var(--ember-y, -60px)) scale(0.35);
+  }
+}
+
+@keyframes gift-star-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.72) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12) rotate(12deg);
+  }
+}
+
+@keyframes gift-spark-fly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3) rotate(0deg);
+  }
+  20% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--spark-x, 0px), var(--spark-y, -40px)) scale(1) rotate(var(--spark-rot, 45deg));
+  }
+}
+
+@keyframes ticket-enter {
   from {
     opacity: 0;
-    transform: translateY(0.75rem) scale(0.6);
+    transform: translateY(1.1rem) scale(0.95);
   }
   to {
     opacity: 1;

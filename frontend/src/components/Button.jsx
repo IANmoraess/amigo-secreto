@@ -1,10 +1,27 @@
 import Spinner from './Spinner.jsx';
 
 const VARIANTS = {
-  primary: 'bg-pine-800 text-white hover:bg-pine-900',
-  secondary: 'bg-mint-50 text-pine-900 hover:bg-mint-100',
-  danger: 'bg-berry-600 text-white hover:bg-berry-700',
-  ghost: 'text-pine-800 hover:bg-mint-100',
+  // Verde Festivo — ações positivas padrão (criar evento, adicionar, confirmar)
+  primary:
+    'bg-btn-festive text-warm-white hover:bg-btn-festive-hover active:bg-btn-festive-active focus-visible:outline-btn-festive',
+  // Vermelho Cranberry — ações principais de destaque (abrir presente, revelar, CTA inicial)
+  cranberry:
+    'bg-btn-cranberry text-warm-white hover:bg-btn-cranberry-hover active:bg-btn-cranberry-active focus-visible:outline-btn-cranberry',
+  // Dourado Natalino — ações especiais (realizar sorteio)
+  gold:
+    'bg-btn-gold text-pine-900 hover:bg-btn-gold-hover active:bg-btn-gold-active focus-visible:outline-gold-600',
+  // Coral — ações alternativas e elementos que precisam de destaque
+  coral:
+    'bg-btn-coral text-pine-900 hover:bg-btn-coral-hover active:bg-btn-coral-active focus-visible:outline-btn-coral-active',
+  // Secundário suave integrado à paleta Muted Sage
+  secondary:
+    'border border-sage/40 bg-mint-100 text-pine-900 hover:bg-mint-200/80 active:bg-mint-200 focus-visible:outline-pine-700',
+  // Ações destrutivas (remover participante, confirmações críticas)
+  danger:
+    'bg-berry-600 text-warm-white hover:bg-berry-700 active:bg-berry-700/90 focus-visible:outline-berry-600',
+  // Ações discretas de navegação/lista
+  ghost:
+    'text-pine-800 hover:bg-mint-100/85 active:bg-mint-200/60 focus-visible:outline-pine-700',
 };
 
 const SIZES = {
@@ -16,9 +33,9 @@ const SIZES = {
 export function buttonClasses({ variant = 'primary', size = 'md', className = '' } = {}) {
   return [
     'inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-colors',
-    'focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-pine-700',
-    'disabled:cursor-not-allowed disabled:opacity-60',
-    VARIANTS[variant],
+    'focus-visible:outline-3 focus-visible:outline-offset-2',
+    'disabled:cursor-not-allowed disabled:opacity-55',
+    VARIANTS[variant] ?? VARIANTS.primary,
     SIZES[size],
     className,
   ].join(' ');

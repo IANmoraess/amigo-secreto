@@ -77,11 +77,11 @@ export default function ParticipantManager({ event, busy, onAdd, onRemove, onDra
       <Card>
         <h2 className="text-xl font-bold tracking-tight text-pine-900">
           Participantes{' '}
-          <span className="text-base font-medium text-neutral-500">({participants.length})</span>
+          <span className="text-base font-medium text-charcoal-soft">({participants.length})</span>
         </h2>
 
         {participants.length === 0 ? (
-          <p className="mt-4 text-neutral-600">Nenhum participante cadastrado ainda.</p>
+          <p className="mt-4 text-charcoal-soft">Nenhum participante cadastrado ainda.</p>
         ) : (
           <ul className="mt-4 space-y-2">
             {participants.map((participant) => (
@@ -96,7 +96,7 @@ export default function ParticipantManager({ event, busy, onAdd, onRemove, onDra
                   >
                     {getInitial(participant.name)}
                   </span>
-                  <span className="font-medium break-words text-neutral-900">{participant.name}</span>
+                  <span className="font-medium break-words text-charcoal">{participant.name}</span>
                 </span>
                 <Button
                   variant="ghost"
@@ -123,12 +123,13 @@ export default function ParticipantManager({ event, busy, onAdd, onRemove, onDra
           </span>
           Realizar sorteio
         </h2>
-        <p id="draw-help" className="mt-2 text-sm text-neutral-600">
+        <p id="draw-help" className="mt-2 text-sm text-charcoal-soft">
           {canDraw
             ? 'Confira a lista antes de sortear. Depois do sorteio não será possível alterar os participantes.'
             : `São necessários pelo menos ${MIN_PARTICIPANTS} participantes para realizar o sorteio.`}
         </p>
         <Button
+          variant="gold"
           onClick={() => setConfirmingDraw(true)}
           loading={busy === 'draw'}
           loadingLabel="Realizando sorteio"
@@ -160,6 +161,7 @@ export default function ParticipantManager({ event, busy, onAdd, onRemove, onDra
         open={confirmingDraw}
         title="Realizar o sorteio agora?"
         confirmLabel="Sortear"
+        confirmVariant="gold"
         onConfirm={() => {
           setConfirmingDraw(false);
           onDraw();

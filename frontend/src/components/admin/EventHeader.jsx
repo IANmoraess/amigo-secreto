@@ -20,10 +20,10 @@ export default function EventHeader({ event }) {
           {status.label}
         </span>
       </div>
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-neutral-600">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-charcoal-soft">
         <span>
           Código do evento:{' '}
-          <code className="rounded-lg bg-white px-2 py-0.5 font-mono text-xs text-pine-900">
+          <code className="rounded-lg bg-warm-white px-2 py-0.5 font-mono text-xs text-pine-900">
             {event.id}
           </code>
         </span>

@@ -49,12 +49,12 @@ export default function ConfirmDialog({
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       onClose={handleClose}
-      className="m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl bg-white p-6 text-neutral-800 shadow-xl sm:p-8"
+      className="m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl bg-warm-white p-6 text-charcoal shadow-[0_16px_40px_-16px_rgb(24_55_45/0.25)] sm:p-8"
     >
       <h1 id={titleId} className="text-xl font-bold tracking-tight text-pine-900">
         {title}
       </h1>
-      <div id={descriptionId} className="mt-3 space-y-2 text-sm text-neutral-700">
+      <div id={descriptionId} className="mt-3 space-y-2 text-sm text-charcoal-soft">
         {children}
       </div>
       <form method="dialog" className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">

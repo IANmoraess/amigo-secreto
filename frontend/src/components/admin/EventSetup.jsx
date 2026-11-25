@@ -62,11 +62,11 @@ export default function EventSetup({ events = [], loadingEvents = false, onCreat
           Eventos salvos
         </h2>
         {loadingEvents ? (
-          <p className="mt-4 text-sm text-neutral-600">Carregando eventos...</p>
+          <p className="mt-4 text-sm text-charcoal-soft">Carregando eventos...</p>
         ) : events.length === 0 ? (
-          <p className="mt-4 text-sm text-neutral-600">Nenhum evento criado ainda.</p>
+          <p className="mt-4 text-sm text-charcoal-soft">Nenhum evento criado ainda.</p>
         ) : (
-          <ul aria-labelledby="saved-events-title" className="mt-4 divide-y divide-neutral-200">
+          <ul aria-labelledby="saved-events-title" className="mt-4 divide-y divide-sage/30">
             {events.map((item) => {
               const status = STATUS[item.status] ?? STATUS.draft;
               const count = item.participantCount ?? 0;
@@ -82,7 +82,7 @@ export default function EventSetup({ events = [], loadingEvents = false, onCreat
                         {status.label}
                       </span>
                     </div>
-                    <p className="text-xs text-neutral-600">
+                    <p className="text-xs text-charcoal-soft">
                       {count} {count === 1 ? 'participante' : 'participantes'} ·{' '}
                       <code className="font-mono">{item.id}</code>
                     </p>
@@ -125,7 +125,7 @@ export default function EventSetup({ events = [], loadingEvents = false, onCreat
           />
           <Button
             type="submit"
-            variant="secondary"
+            variant="coral"
             loading={busy === 'open'}
             loadingLabel="Abrindo evento"
             disabled={Boolean(busy)}

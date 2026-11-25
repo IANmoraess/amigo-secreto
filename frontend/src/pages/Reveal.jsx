@@ -9,6 +9,9 @@ import GiftIllustration from '../components/GiftIllustration.jsx';
 import Spinner from '../components/Spinner.jsx';
 import { getErrorMessage, participantApi } from '../services/api.js';
 
+const CHARGE_DURATION_MS = 1350;
+const FLASH_RELEASE_MS = 650;
+
 function extractToken(paramToken, hash) {
   if (paramToken) return paramToken;
   const rawHash = (hash || '').replace(/^#/, '');
@@ -20,35 +23,8 @@ function extractToken(paramToken, hash) {
   }
 }
 
-function FestiveConfetti() {
-  return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-28 overflow-hidden">
-      <span
-        style={{ '--confetti-delay': 0 }}
-        className="confetti-piece absolute top-5 left-[10%] h-2.5 w-2.5 rotate-12 rounded-xs bg-berry-600/80"
-      />
-      <span
-        style={{ '--confetti-delay': 1 }}
-        className="confetti-piece absolute top-11 left-[20%] h-2 w-2 rounded-full bg-gold-500"
-      />
-      <span
-        style={{ '--confetti-delay': 2 }}
-        className="confetti-piece absolute top-4 right-[18%] h-2.5 w-2.5 -rotate-12 rounded-xs bg-pine-700/75"
-      />
-      <span
-        style={{ '--confetti-delay': 3 }}
-        className="confetti-piece absolute top-12 right-[10%] h-2 w-3 rotate-45 rounded-xs bg-mint-200"
-      />
-      <span
-        style={{ '--confetti-delay': 4 }}
-        className="confetti-piece absolute top-18 left-[14%] h-2 w-2 -rotate-12 rounded-xs bg-gold-400"
-      />
-      <span
-        style={{ '--confetti-delay': 5 }}
-        className="confetti-piece absolute top-6 left-[34%] h-2 w-2 rounded-full bg-berry-600/60"
-      />
-    </div>
-  );
+function waitMs(duration) {
+  return new Promise((resolve) => setTimeout(resolve, duration));
 }
 
 export default function Reveal() {
@@ -59,9 +35,17 @@ export default function Reveal() {
   const [access, setAccess] = useState(null);
   const [loadError, setLoadError] = useState('');
   const [receiverName, setReceiverName] = useState(null);
-  const [revealing, setRevealing] = useState(false);
+  const [revealPhase, setRevealPhase] = useState('idle'); // idle | charging | opening | opened
   const [revealError, setRevealError] = useState('');
   const resultRef = useRef(null);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -90,15 +74,37 @@ export default function Reveal() {
   }, [receiverName]);
 
   async function handleReveal() {
-    setRevealing(true);
+    if (revealPhase !== 'idle' || receiverName) return;
+    setRevealPhase('charging');
     setRevealError('');
     try {
-      const data = await participantApi.reveal(token);
+      const revealPromise = participantApi.reveal(token);
+      const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
+      if (prefersReducedMotion) {
+        const data = await revealPromise;
+        if (!mountedRef.current) return;
+        setReceiverName(data.receiverName);
+        setRevealPhase('opened');
+        return;
+      }
+
+      // 1) Progressão de acúmulo de energia e tremor (~1,35s) em paralelo com a API real
+      const [data] = await Promise.all([revealPromise, waitMs(CHARGE_DURATION_MS)]);
+      if (!mountedRef.current) return;
+
+      // 2) Liberação da tampa e expansão gradual da luz vertical em destaque (~0,65s -> total ~2s)
+      setRevealPhase('opening');
+      await waitMs(FLASH_RELEASE_MS);
+      if (!mountedRef.current) return;
+
+      // 3) Revela o ticket e reduz suavemente o presente para destacar o nome sorteado
       setReceiverName(data.receiverName);
+      setRevealPhase('opened');
     } catch (error) {
+      if (!mountedRef.current) return;
       setRevealError(getErrorMessage(error));
-    } finally {
-      setRevealing(false);
+      setRevealPhase('idle');
     }
   }
 
@@ -107,7 +113,7 @@ export default function Reveal() {
       <Card className="flex flex-col items-center gap-3 py-12 text-center text-pine-800">
         <title>Verificando link · Amigo Secreto</title>
         <Spinner label="Preparando seu sorteio" className="[--size:2rem]" />
-        <p className="text-neutral-600">Preparando seu sorteio…</p>
+        <p className="text-charcoal-soft">Preparando seu sorteio…</p>
       </Card>
     );
   }
@@ -121,7 +127,7 @@ export default function Reveal() {
           Não foi possível abrir este link
         </h1>
         <Alert type="error">{loadError}</Alert>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-charcoal-soft">
           Confira se o link foi copiado por completo. Se o problema continuar, fale com quem
           organizou o amigo secreto.
         </p>
@@ -130,72 +136,105 @@ export default function Reveal() {
   }
 
   const isRevealedNow = Boolean(receiverName);
+  const isBusyOpening = revealPhase === 'charging' || revealPhase === 'opening';
+  const giftState =
+    revealPhase === 'opening' || revealPhase === 'opened'
+      ? 'opened'
+      : revealPhase === 'charging'
+        ? 'charging'
+        : 'idle';
 
   return (
-    <div>
+    <Card className="relative overflow-hidden text-center">
       <title>{`${access.eventName} · Amigo Secreto`}</title>
 
-      <GiftIllustration
-        variant="trio"
-        opened={isRevealedNow}
-        className="relative z-0 mx-auto -mb-3.5 h-24 w-60 sm:h-28 sm:w-72"
-      />
+      <span className="inline-flex items-center rounded-full bg-berry-50 px-3.5 py-1 text-xs font-semibold tracking-wide text-berry-700 uppercase">
+        {access.eventName}
+      </span>
 
-      <Card className="relative z-1 overflow-hidden text-center">
-        {isRevealedNow && <FestiveConfetti />}
+      <h1 className="mt-3 text-2xl font-bold tracking-tight text-pine-900 sm:text-3xl">
+        Olá, {access.participantName}!
+      </h1>
 
-        <span className="relative inline-flex items-center rounded-full bg-berry-50 px-3.5 py-1 text-xs font-semibold tracking-wide text-berry-700 uppercase">
-          {access.eventName}
-        </span>
+      {/* Presente protagonista: maior e imponente antes/durante a abertura; reduz suavemente quando o ticket aparece */}
+      <div
+        className={`mx-auto flex items-center justify-center transition-[margin] duration-500 ${
+          isRevealedNow ? 'mt-4 mb-2' : 'mt-6 mb-4'
+        }`}
+      >
+        <div
+          className={`group relative flex items-center justify-center rounded-3xl p-2 transition-transform duration-300 ${
+            revealPhase === 'idle' ? 'hover:scale-[1.03] active:scale-[0.98]' : ''
+          }`}
+        >
+          <GiftIllustration
+            variant="hero"
+            state={giftState}
+            className={`max-w-full transition-[width,height] duration-500 ease-out ${
+              isRevealedNow ? 'h-32 w-32 sm:h-36 sm:w-36' : 'h-60 w-60 sm:h-72 sm:w-72'
+            }`}
+          />
 
-        <h1 className="relative mt-3 text-2xl font-bold tracking-tight text-pine-900 sm:text-3xl">
-          Olá, {access.participantName}!
-        </h1>
-
-        {isRevealedNow ? (
-          <div className="relative mt-5">
-            <h2 id="resultado" className="text-sm font-semibold text-neutral-600">
-              Seu amigo secreto é
-            </h2>
-
-            <DrawTicket
-              ref={resultRef}
-              receiverName={receiverName}
-              ariaLabelledBy="resultado"
-            />
-
-            <p className="mt-5 text-sm leading-relaxed text-neutral-600">
-              Guarde segredo! Você pode abrir este mesmo link sempre que precisar consultar de novo.
-            </p>
-          </div>
-        ) : (
-          <div className="mt-4 space-y-6">
-            {access.hasRevealed ? (
-              <Alert type="info" title="Você já revelou seu amigo secreto">
-                Sem problemas: toque abaixo se quiser consultar o nome sorteado novamente.
-              </Alert>
-            ) : (
-              <p className="mx-auto max-w-prose text-neutral-600">
-                Tudo pronto! Quando ninguém estiver olhando a sua tela, toque no botão abaixo para
-                revelar quem você tirou.
-              </p>
-            )}
-
-            {revealError && <Alert type="error">{revealError}</Alert>}
-
-            <Button
-              variant="danger"
+          {!isRevealedNow && (
+            <button
+              type="button"
               onClick={handleReveal}
-              loading={revealing}
-              loadingLabel="Revelando resultado"
-              className="w-full sm:w-auto"
-            >
-              {!revealing && <Gift className="h-5 w-5" aria-hidden="true" />}
-              {access.hasRevealed ? 'Ver meu amigo secreto novamente' : 'Revelar meu amigo secreto'}
-            </Button>
-          </div>
-        )}
-      </Card>
-    </div>
+              disabled={isBusyOpening}
+              aria-label={
+                access.hasRevealed
+                  ? 'Abrir presente para ver seu amigo secreto novamente'
+                  : 'Abrir presente para revelar seu amigo secreto'
+              }
+              className="absolute inset-0 cursor-pointer rounded-3xl focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-pine-700 disabled:cursor-wait"
+            />
+          )}
+        </div>
+      </div>
+
+      {isRevealedNow ? (
+        <div className="relative mt-2">
+          <h2 id="resultado" className="text-sm font-semibold text-charcoal-soft">
+            Seu amigo secreto é
+          </h2>
+
+          <DrawTicket
+            ref={resultRef}
+            receiverName={receiverName}
+            ariaLabelledBy="resultado"
+          />
+
+          <p className="mt-5 text-sm leading-relaxed text-charcoal-soft">
+            Guarde segredo! Você pode abrir este mesmo link sempre que precisar consultar de novo.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-5">
+          {access.hasRevealed ? (
+            <Alert type="info" title="Você já revelou seu amigo secreto">
+              Sem problemas: toque no presente ou no botão abaixo para consultar o nome sorteado
+              novamente.
+            </Alert>
+          ) : (
+            <p className="mx-auto max-w-prose text-charcoal-soft">
+              Seu presente está pronto. Quando ninguém estiver olhando a sua tela, toque nele ou no
+              botão abaixo para descobrir quem você tirou.
+            </p>
+          )}
+
+          {revealError && <Alert type="error">{revealError}</Alert>}
+
+          <Button
+            variant="cranberry"
+            onClick={handleReveal}
+            loading={isBusyOpening}
+            loadingLabel="Abrindo presente"
+            className="w-full sm:w-auto"
+          >
+            {!isBusyOpening && <Gift className="h-5 w-5" aria-hidden="true" />}
+            {access.hasRevealed ? 'Ver meu amigo secreto novamente' : 'Abrir meu presente'}
+          </Button>
+        </div>
+      )}
+    </Card>
   );
 }

@@ -4,35 +4,35 @@ const TYPES = {
   success: {
     Icon: CircleCheck,
     iconLabel: 'Sucesso',
-    classes: 'bg-mint-50 text-pine-900',
-    iconColor: 'text-pine-700',
-  },
-  error: {
-    Icon: CircleAlert,
-    iconLabel: 'Erro',
-    classes: 'bg-berry-50 text-berry-700',
-    iconColor: 'text-berry-600',
-  },
-  warning: {
-    Icon: TriangleAlert,
-    iconLabel: 'Atenção',
-    classes: 'bg-gold-100/75 text-neutral-900',
-    iconColor: 'text-gold-600',
+    classes: 'border border-alert-success-icon/20 bg-alert-success-bg text-alert-success-text',
+    iconColor: 'text-alert-success-icon',
   },
   info: {
     Icon: Info,
     iconLabel: 'Informação',
-    classes: 'bg-neutral-100/90 text-neutral-800',
-    iconColor: 'text-pine-700',
+    classes: 'border border-alert-info-icon/20 bg-alert-info-bg text-alert-info-text',
+    iconColor: 'text-alert-info-icon',
+  },
+  warning: {
+    Icon: TriangleAlert,
+    iconLabel: 'Atenção',
+    classes: 'border border-alert-warning-icon/22 bg-alert-warning-bg text-alert-warning-text',
+    iconColor: 'text-alert-warning-icon',
+  },
+  error: {
+    Icon: CircleAlert,
+    iconLabel: 'Erro',
+    classes: 'border border-alert-error-icon/22 bg-alert-error-bg text-alert-error-text',
+    iconColor: 'text-alert-error-icon',
   },
 };
 
 /**
- * Mensagem de feedback Modern Flat (sucesso, erro, atenção ou informação).
+ * Mensagem de feedback Modern Flat (sucesso, informação, atenção ou erro).
  * Erros usam role="alert"; os demais tipos usam role="status".
  */
 export default function Alert({ type = 'info', title, children, className = '' }) {
-  const { Icon, iconLabel, classes, iconColor } = TYPES[type];
+  const { Icon, iconLabel, classes, iconColor } = TYPES[type] ?? TYPES.info;
 
   return (
     <div
@@ -42,7 +42,7 @@ export default function Alert({ type = 'info', title, children, className = '' }
       <Icon className={`mt-0.5 h-5 w-5 flex-none ${iconColor}`} role="img" aria-label={iconLabel} />
       <div className="space-y-1">
         {title && <p className="font-semibold">{title}</p>}
-        <div>{children}</div>
+        <div className="leading-relaxed">{children}</div>
       </div>
     </div>
   );

@@ -51,17 +51,20 @@ export default function Home() {
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-balance text-pine-900 sm:text-4xl">
             Organize seu Amigo Secreto sem estresse
           </h1>
-          <p className="mx-auto mt-3 max-w-prose text-pretty text-neutral-600">
+          <p className="mx-auto mt-3 max-w-prose text-pretty text-charcoal-soft">
             Reúna quem você ama mesmo à distância. Crie o grupo, faça o sorteio em segundos e
             envie um link secreto para cada participante.
           </p>
 
           <div className="mt-6 flex flex-col items-center gap-3">
-            <Link to="/admin" className={buttonClasses({ className: 'w-full sm:w-auto' })}>
+            <Link
+              to="/admin"
+              className={buttonClasses({ variant: 'cranberry', className: 'w-full sm:w-auto' })}
+            >
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               Acessar área do organizador
             </Link>
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-charcoal-soft">
               Recebeu um link? Basta abri-lo para descobrir quem você tirou.
             </p>
           </div>
@@ -77,13 +80,13 @@ export default function Home() {
             <li
               key={title}
               style={{ '--stagger-index': index }}
-              className="stagger-item flex gap-4 rounded-3xl bg-white p-5 shadow-[0_6px_22px_-12px_rgb(15_61_46/0.10)]"
+              className="stagger-item flex gap-4 rounded-3xl border border-sage/30 bg-warm-white p-5 shadow-[0_6px_22px_-12px_rgb(24_55_45/0.09)]"
             >
               <div
                 className={`relative flex h-12 w-12 flex-none items-center justify-center rounded-2xl ${badgeClasses}`}
               >
                 <Icon className="h-5 w-5" aria-hidden="true" />
-                <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-pine-800 text-[11px] font-bold text-white">
+                <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-pine-900 text-[11px] font-bold text-warm-white">
                   {index + 1}
                 </span>
               </div>
@@ -92,7 +95,7 @@ export default function Home() {
                   <span className="sr-only">Passo {index + 1}: </span>
                   {title}
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-neutral-600">{text}</p>
+                <p className="mt-1 text-sm leading-relaxed text-charcoal-soft">{text}</p>
               </div>
             </li>
           ))}
@@ -101,13 +104,25 @@ export default function Home() {
 
       <section
         aria-labelledby="privacidade"
-        className="flex items-start gap-4 rounded-3xl bg-gradient-to-br from-pine-900 to-pine-800 p-6 text-mint-50 shadow-[0_10px_28px_-12px_rgb(15_61_46/0.35)] sm:p-7"
+        className="relative flex items-start gap-4 overflow-hidden rounded-3xl bg-pine-800 p-6 text-mint-50 shadow-[0_10px_28px_-14px_rgb(24_55_45/0.30)] sm:p-7"
       >
-        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-white/12 text-gold-400">
+        <svg
+          viewBox="0 0 96 96"
+          fill="none"
+          aria-hidden="true"
+          focusable="false"
+          className="pointer-events-none absolute -right-2 -bottom-2 h-24 w-24 opacity-15"
+        >
+          <path d="M88 88C68 74 52 54 38 26" stroke="#C5A16B" strokeWidth="2" strokeLinecap="round" />
+          <path d="M68 68C60 76 48 77 42 70C50 64 60 63 68 68Z" fill="#C5A16B" />
+          <path d="M54 50C44 56 34 55 30 48C38 43 47 44 54 50Z" fill="#C5A16B" />
+          <path d="M72 64C78 54 77 44 70 39C65 48 66 57 72 64Z" fill="#C5A16B" />
+        </svg>
+        <span className="relative flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-warm-white/10 text-gold-400">
           <ShieldCheck className="h-5 w-5" aria-hidden="true" />
         </span>
-        <div>
-          <h2 id="privacidade" className="font-bold text-white">
+        <div className="relative">
+          <h2 id="privacidade" className="font-bold text-warm-white">
             Segredo guardado de verdade
           </h2>
           <p className="mt-1 text-sm leading-relaxed text-mint-100">

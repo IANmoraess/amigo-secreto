@@ -26,7 +26,7 @@ export default function EventSummary({ event }) {
 
       <Card>
         <h2 className="text-xl font-bold tracking-tight text-pine-900">Participantes</h2>
-        <p className="mt-1 text-sm text-neutral-600">
+        <p className="mt-1 text-sm text-charcoal-soft">
           {revealedCount} de {event.participants.length} já visualizaram o resultado.
         </p>
         <ul className="mt-4 space-y-2">
@@ -35,14 +35,14 @@ export default function EventSummary({ event }) {
               key={participant.id}
               className="flex items-center justify-between gap-3 rounded-2xl bg-cream/65 px-4 py-3"
             >
-              <span className="font-medium break-words text-neutral-900">{participant.name}</span>
+              <span className="font-medium break-words text-charcoal">{participant.name}</span>
               {participant.hasRevealed ? (
                 <span className="flex flex-none items-center gap-1.5 rounded-full bg-mint-100 px-3 py-1 text-xs font-semibold text-pine-800">
                   <CircleCheck className="h-3.5 w-3.5" aria-hidden="true" />
                   Visualizou
                 </span>
               ) : (
-                <span className="flex flex-none items-center gap-1.5 rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
+                <span className="flex flex-none items-center gap-1.5 rounded-full bg-sage/20 px-3 py-1 text-xs font-medium text-charcoal-soft">
                   <Clock className="h-3.5 w-3.5" aria-hidden="true" />
                   Aguardando
                 </span>

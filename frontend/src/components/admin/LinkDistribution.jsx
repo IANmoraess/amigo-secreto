@@ -44,7 +44,7 @@ export default function LinkDistribution({ links, onFinish }) {
           </span>
           Distribuição dos links individuais
         </h2>
-        <p className="mt-2 text-sm text-neutral-600">
+        <p className="mt-2 text-sm text-charcoal-soft">
           Copie o link de cada participante e envie somente para a pessoa indicada, pelo meio
           que preferir.
         </p>
@@ -57,11 +57,11 @@ export default function LinkDistribution({ links, onFinish }) {
       </Alert>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between text-sm font-medium text-neutral-800">
+        <div className="flex items-center justify-between text-sm font-medium text-charcoal">
           <span aria-live="polite">
             {copiedCount} de {total} links copiados
           </span>
-          <span className="text-pine-700">{progressPercent}%</span>
+          <span className="text-pine-800">{progressPercent}%</span>
         </div>
         <div
           className="h-2.5 w-full overflow-hidden rounded-full bg-mint-100"
@@ -72,7 +72,7 @@ export default function LinkDistribution({ links, onFinish }) {
           aria-label="Progresso de links copiados"
         >
           <div
-            className="h-full rounded-full bg-pine-700 transition-all duration-300"
+            className="h-full rounded-full bg-pine-800 transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -88,7 +88,7 @@ export default function LinkDistribution({ links, onFinish }) {
                 copied ? 'bg-mint-50' : 'bg-cream/65'
               }`}
             >
-              <span className="flex items-center gap-2.5 break-words font-medium text-neutral-900">
+              <span className="flex items-center gap-2.5 break-words font-medium text-charcoal">
                 {copied && (
                   <CircleCheck className="h-5 w-5 flex-none text-pine-700" role="img" aria-label="Link já copiado" />
                 )}
@@ -96,6 +96,7 @@ export default function LinkDistribution({ links, onFinish }) {
               </span>
               <CopyButton
                 text={buildRevealLink(link.token)}
+                variant={copied ? 'secondary' : 'coral'}
                 label={copied ? 'Copiar novamente' : 'Copiar link'}
                 srLabel={`de ${link.name}`}
                 onCopied={() => markCopied(link.participantId)}
