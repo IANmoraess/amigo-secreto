@@ -256,28 +256,28 @@
     opacity: 0;
   }
 
-  /* Estado 1: fechado — sem halo lateral, apenas balanço e expectativa sutil */
+  /* Estado 1: fechado — ciclo total de 4.4s (movimento + pausa parada) */
   .gift-state-idle .gift-hero-box {
     @media (prefers-reduced-motion: no-preference) {
-      animation: gift-idle-hop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      animation: gift-idle-hop 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
   }
 
   .gift-state-idle .gift-hero-lid {
     @media (prefers-reduced-motion: no-preference) {
-      animation: gift-lid-nudge 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      animation: gift-lid-nudge 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
   }
 
   .gift-state-idle .gift-hero-shadow {
     @media (prefers-reduced-motion: no-preference) {
-      animation: gift-shadow-hop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      animation: gift-shadow-hop 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
   }
 
   .gift-state-idle .gift-hero-seam {
     @media (prefers-reduced-motion: no-preference) {
-      animation: gift-seam-pulse 3.4s ease-in-out infinite;
+      animation: gift-seam-pulse 4.4s ease-in-out infinite;
     }
   }
 
@@ -370,6 +370,15 @@
   }
 
   /* Estado 3: aberto — tampa salta, projeção vertical de luz irrompe em flash recortado às bordas e pulsa em loop */
+  .gift-hero-rim {
+    transition: opacity 0.2s ease 0.65s;
+  }
+
+  .gift-state-opened .gift-hero-rim {
+    opacity: 0;
+    transition: none;
+  }
+
   .gift-state-opened .gift-hero-box {
     @media (prefers-reduced-motion: no-preference) {
       animation: gift-open-rebound 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -544,70 +553,71 @@
 @keyframes gift-idle-hop {
 
   0%,
-  12%,
+  9.3%,
+  77.3%,
   100% {
     transform: translateY(0) rotate(0deg) scale(1, 1);
   }
 
-  18% {
+  13.9% {
     transform: translateY(0) rotate(-2.2deg) scale(1.01, 0.99);
   }
 
-  25% {
+  19.3% {
     transform: translateY(0) rotate(2.2deg) scale(1.01, 0.99);
   }
 
-  31% {
+  24% {
     transform: translateY(2px) rotate(-1deg) scale(1.03, 0.96);
   }
 
-  37% {
+  28.6% {
     transform: translateY(-7px) rotate(-3deg) scale(0.98, 1.03);
   }
 
-  43% {
+  33.2% {
     transform: translateY(1px) rotate(2deg) scale(1.02, 0.98);
   }
 
   /* Tremor progressivo ganhando intensidade e velocidade */
-  50% {
+  38.6% {
     transform: translateY(1.5px) rotate(-2.2deg) scale(1.03, 0.965);
   }
 
-  54% {
+  41.7% {
     transform: translateY(2px) rotate(2.6deg) scale(1.035, 0.96);
   }
 
-  58% {
+  44.8% {
     transform: translateY(2.5px) rotate(-3.2deg) scale(1.045, 0.95);
   }
 
-  62% {
+  47.9% {
     transform: translateY(2.8px) rotate(3.6deg) scale(1.05, 0.94);
   }
 
-  65% {
+  50.2% {
     transform: translateY(3px) rotate(-4deg) scale(1.055, 0.935);
   }
 
-  68% {
+  52.5% {
     transform: translateY(3px) rotate(4deg) scale(1.06, 0.93);
   }
 
-  71% {
+  54.9% {
     transform: translateY(3.2px) rotate(-3.5deg) scale(1.06, 0.93);
   }
 
   /* Liberação rápida em pequeno salto cheio de energia */
-  77% {
+  59.5% {
     transform: translateY(-10px) rotate(2.4deg) scale(0.965, 1.045);
   }
 
-  84% {
+  64.9% {
     transform: translateY(1.5px) rotate(-1.2deg) scale(1.02, 0.98);
   }
 
-  91% {
+  70.3% {
     transform: translateY(0) rotate(0.5deg) scale(1, 1);
   }
 }
@@ -615,37 +625,37 @@
 @keyframes gift-lid-nudge {
 
   0%,
-  33%,
-  84%,
+  25.5%,
+  64.9%,
   100% {
     transform: translateY(0) rotate(0deg);
   }
 
-  38% {
+  29.4% {
     transform: translateY(-3.5px) rotate(-2.5deg);
   }
 
-  44% {
+  34% {
     transform: translateY(0) rotate(0.8deg);
   }
 
-  54% {
+  41.7% {
     transform: translateY(-2px) rotate(2deg);
   }
 
-  59% {
+  45.6% {
     transform: translateY(-3px) rotate(-2.8deg);
   }
 
-  64% {
+  49.5% {
     transform: translateY(-4px) rotate(3.2deg);
   }
 
-  69% {
+  53.3% {
     transform: translateY(-5px) rotate(-3.6deg);
   }
 
-  77% {
+  59.5% {
     transform: translateY(-6.5px) rotate(3deg);
   }
 }
@@ -653,58 +663,65 @@
 @keyframes gift-seam-pulse {
 
   0%,
-  46%,
-  84%,
+  25.5%,
+  34%,
+  35.5%,
+  64.9%,
   100% {
     opacity: 0;
   }
 
-  58% {
-    opacity: 0.35;
+  29.4% {
+    opacity: 0.75;
   }
 
-  70% {
+  44.8% {
+    opacity: 0.6;
+  }
+
+  54.1% {
+    opacity: 1;
+  }
+
+  58.7% {
     opacity: 0.85;
-  }
-
-  76% {
-    opacity: 0.55;
   }
 }
 
 @keyframes gift-shadow-hop {
 
   0%,
-  12%,
+  9.3%,
+  77.3%,
   100% {
     transform: scaleX(1);
-    opacity: 0.14;
+    opacity: 0.9;
   }
 
-  31% {
+  24% {
     transform: scaleX(1.05);
-    opacity: 0.17;
+    opacity: 1;
   }
 
-  37% {
+  28.6% {
     transform: scaleX(0.85);
-    opacity: 0.09;
+    opacity: 0.55;
   }
 
-  50%,
-  71% {
+  38.6%,
+  54.9% {
     transform: scaleX(1.07);
-    opacity: 0.19;
+    opacity: 1;
   }
 
-  77% {
+  59.5% {
     transform: scaleX(0.78);
-    opacity: 0.08;
+    opacity: 0.5;
   }
 
-  84% {
+  64.9% {
     transform: scaleX(1.03);
-    opacity: 0.16;
+    opacity: 0.95;
   }
 }
 
@@ -734,11 +751,11 @@
   0%,
   100% {
     transform: scaleX(0.9);
-    opacity: 0.11;
+    opacity: 0.65;
   }
   50% {
     transform: scaleX(0.84);
-    opacity: 0.08;
+    opacity: 0.45;
   }
 }
 

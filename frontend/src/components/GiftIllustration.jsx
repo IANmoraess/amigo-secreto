@@ -78,10 +78,11 @@ export default function GiftIllustration({
             <stop offset="100%" stopColor="#EAB243" stopOpacity="0" />
           </linearGradient>
 
-          {/* Pequena luz escapando pela fresta no final da preparação */}
+          {/* Pequena luz escapando pela fresta no final da preparação e ao levantar a tampa */}
           <linearGradient id="gift-charge-leak" x1="50%" y1="100%" x2="50%" y2="0%">
-            <stop offset="0%" stopColor="#FFF5CC" stopOpacity="0.95" />
-            <stop offset="55%" stopColor="#F5C353" stopOpacity="0.5" />
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
+            <stop offset="45%" stopColor="#FFE89E" stopOpacity="0.95" />
+            <stop offset="85%" stopColor="#F5C353" stopOpacity="0.55" />
             <stop offset="100%" stopColor="#D99A35" stopOpacity="0" />
           </linearGradient>
         </defs>
@@ -176,7 +177,7 @@ export default function GiftIllustration({
               cx="66"
               cy="92"
               r="3.2"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-spark"
               style={{ '--spark-x': '-14px', '--spark-y': '-68px', '--spark-delay': '20ms' }}
             />
@@ -209,7 +210,7 @@ export default function GiftIllustration({
               width="4.6"
               height="4.6"
               rx="1"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-spark"
               style={{
                 '--spark-x': '10px',
@@ -236,7 +237,7 @@ export default function GiftIllustration({
             />
             <path
               d="M100 86L101.6 89.4L105 91L101.6 92.6L100 96L98.4 92.6L95 91L98.4 89.4L100 86Z"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-spark"
               style={{
                 '--spark-x': '0px',
@@ -267,7 +268,7 @@ export default function GiftIllustration({
               cx="118"
               cy="94"
               r="2.6"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-ember"
               style={{
                 '--ember-x': '6px',
@@ -279,7 +280,7 @@ export default function GiftIllustration({
             />
             <path
               d="M100 89.5L101.8 93.2L105.5 95L101.8 96.8L100 100.5L98.2 96.8L94.5 95L98.2 93.2L100 89.5Z"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-ember"
               style={{
                 '--ember-x': '2px',
@@ -323,7 +324,7 @@ export default function GiftIllustration({
               width="3.8"
               height="3.8"
               rx="0.9"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-ember"
               style={{
                 '--ember-x': '-5px',
@@ -393,7 +394,7 @@ export default function GiftIllustration({
           <g>
             <path
               d="M64 38L65.6 42.9L70.5 44.5L65.6 46.1L64 51L62.4 46.1L57.5 44.5L62.4 42.9L64 38Z"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-twinkle"
               style={{ '--twinkle-dur': '2.2s', '--twinkle-delay': '0.15s' }}
             />
@@ -405,7 +406,7 @@ export default function GiftIllustration({
             />
             <path
               d="M101 14L102.5 18.5L107 20L102.5 21.5L101 26L99.5 21.5L95 20L99.5 18.5L101 14Z"
-              fill="#D99A35"
+              fill="#EBC04F"
               className="gift-hero-twinkle"
               style={{ '--twinkle-dur': '2.4s', '--twinkle-delay': '0.4s' }}
             />
@@ -426,16 +427,36 @@ export default function GiftIllustration({
           <rect x="89" y="96" width="2" height="74" fill="#C5A16B" opacity="0.8" />
           <rect x="109" y="96" width="2" height="74" fill="#C5A16B" opacity="0.8" />
 
-          {/* Fresta luminosa estritamente dentro da largura da caixa durante o tremor */}
+          {/* Borda superior em verde mais claro para cortar a fita sob a luz e sumir na abertura */}
           <rect
             x="48"
-            y="95.5"
+            y="94"
             width="104"
-            height="4"
+            height="4.5"
             rx="2"
-            fill="#FFE08A"
-            className="gift-hero-seam"
+            fill="#2F5947"
+            className="gift-hero-rim"
           />
+
+          {/* Brilho interno atrás da tampa: feixe suave para cima + filete horizontal na abertura */}
+          <g className="gift-hero-seam">
+            <rect
+              x="48"
+              y="86"
+              width="104"
+              height="12.5"
+              rx="2"
+              fill="url(#gift-charge-leak)"
+            />
+            <rect
+              x="48"
+              y="94.5"
+              width="104"
+              height="4"
+              rx="2"
+              fill="#EBC04F"
+            />
+          </g>
 
           {/* Tampa e laço (Deep Pine + Cranberry + Antique Gold) */}
           <g className="gift-hero-lid">
