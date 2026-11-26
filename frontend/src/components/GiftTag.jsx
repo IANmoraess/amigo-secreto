@@ -4,14 +4,21 @@
  * extremidade direita chanfrada, furo vazado com ilhós e cordão Antique Gold (#C5A16B).
  * O conjunto completo (etiqueta + cordão) é centralizado horizontalmente como peça única.
  */
-export default function GiftTag({ receiverName, ariaLabelledBy = 'resultado', ref }) {
+export default function GiftTag({
+  receiverName,
+  ariaLabelledBy = 'resultado',
+  closing = false,
+  ref,
+}) {
   return (
     <div
       ref={ref}
       tabIndex={-1}
       role="region"
       aria-labelledby={ariaLabelledBy}
-      className="gift-tag-reveal mx-auto mt-4 flex w-full max-w-[480px] items-stretch pl-7 outline-none focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-pine-700 [filter:drop-shadow(0_14px_22px_rgb(139_47_55/0.26))] sm:pl-8"
+      className={`${
+        closing ? 'gift-tag-closing pointer-events-none' : 'gift-tag-reveal'
+      } mx-auto mt-4 flex w-full max-w-[480px] items-stretch pl-7 outline-none focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-pine-700 [filter:drop-shadow(0_14px_22px_rgb(139_47_55/0.26))] sm:pl-8`}
     >
       {/* Corpo retangular principal à esquerda em Cranberry (#A83D46) */}
       <div className="relative flex min-h-[112px] flex-1 items-center justify-center rounded-l-2xl bg-berry-600 px-6 py-7 text-center sm:min-h-[124px] sm:px-9 sm:py-8">
@@ -38,8 +45,12 @@ export default function GiftTag({ receiverName, ariaLabelledBy = 'resultado', re
           </svg>
         </div>
 
-        <p className="relative text-3xl font-bold tracking-tight break-words text-warm-white sm:text-4xl">
-          {receiverName}
+        <p
+          className={`relative text-3xl font-bold tracking-tight break-words text-warm-white transition-opacity duration-100 sm:text-4xl ${
+            closing ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
+          {closing ? '' : receiverName}
         </p>
       </div>
 

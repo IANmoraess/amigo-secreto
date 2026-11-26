@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { CalendarCheck, CalendarPlus, CircleCheck, Clock, Download, Lock } from 'lucide-react';
-import Alert from '../Alert.jsx';
+import { CalendarCheck, CalendarPlus, CircleCheck, Clock, Download } from 'lucide-react';
 import Button from '../Button.jsx';
 import Card from '../Card.jsx';
 import { downloadDrawRecordImage } from '../../utils/drawRecordImage.js';
@@ -35,10 +34,32 @@ export default function EventSummary({ event }) {
 
   return (
     <>
-      <Alert type="info" icon={Lock} title="Os resultados são secretos">
-        O organizador não tem acesso a quem tirou quem. Cada participante consulta o próprio
-        resultado pelo link individual.
-      </Alert>
+      <section
+        aria-labelledby="resultados-secretos"
+        className="relative overflow-hidden rounded-3xl bg-pine-800 px-6 py-6 text-left text-mint-50 shadow-[0_10px_28px_-14px_rgb(24_55_45/0.30)] sm:px-8 sm:py-7"
+      >
+        <svg
+          viewBox="0 0 96 96"
+          fill="none"
+          aria-hidden="true"
+          focusable="false"
+          className="pointer-events-none absolute -right-2 -bottom-2 h-24 w-24 opacity-15"
+        >
+          <path d="M88 88C68 74 52 54 38 26" stroke="#C5A16B" strokeWidth="2" strokeLinecap="round" />
+          <path d="M68 68C60 76 48 77 42 70C50 64 60 63 68 68Z" fill="#C5A16B" />
+          <path d="M54 50C44 56 34 55 30 48C38 43 47 44 54 50Z" fill="#C5A16B" />
+          <path d="M72 64C78 54 77 44 70 39C65 48 66 57 72 64Z" fill="#C5A16B" />
+        </svg>
+        <div className="relative max-w-prose">
+          <h2 id="resultados-secretos" className="text-base font-bold text-[#C5A16B] sm:text-lg">
+            Os resultados são secretos
+          </h2>
+          <p className="mt-2.5 text-sm leading-relaxed text-mint-100">
+            O organizador não tem acesso a quem tirou quem. Cada participante consulta o próprio
+            resultado pelo link individual.
+          </p>
+        </div>
+      </section>
 
       <Card>
         <div className="flex flex-wrap items-start justify-between gap-3">

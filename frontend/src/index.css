@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+:root {
+  color-scheme: light only;
+}
+
 @theme {
   /* Paleta principal natalina — Modern Flat */
   --color-cream: #F4F0E8;
@@ -403,6 +407,72 @@
   .gift-state-opened .gift-light-mouth {
     @media (prefers-reduced-motion: no-preference) {
       animation: gift-core-breathe 2.2s ease-in-out 0.65s infinite;
+    }
+  }
+
+  /* Estado 4: fechando — etiqueta curva para dentro da caixa; em seguida tampa fecha (ease-in) e caixa encaixa */
+  .gift-state-closing .gift-hero-box {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-box-seat 0.18s cubic-bezier(0.22, 1, 0.36, 1) 0.72s both;
+    }
+  }
+
+  .gift-state-closing .gift-hero-lid {
+    transform: translate(-11px, -27px) rotate(-20deg);
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-lid-close 0.32s cubic-bezier(0.55, 0, 1, 0.45) 0.42s forwards;
+    }
+  }
+
+  .gift-state-closing .gift-light-shaft {
+    opacity: 1;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: gift-shaft-close 0.32s cubic-bezier(0.55, 0, 1, 0.45) 0.42s forwards;
+    }
+  }
+
+  /* A trajetória da etiqueta é calculada em JS (Reveal.jsx) a partir das posições reais */
+  .gift-tag-closing {
+    transform-origin: 50% 50%;
+  }
+
+  @keyframes gift-lid-close {
+    0% {
+      transform: translate(-11px, -27px) rotate(-20deg);
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
+
+
+
+  @keyframes gift-box-seat {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(0.97);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes gift-shaft-close {
+    0% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+    55% {
+      opacity: 0.7;
+      transform: scaleY(0.45);
+    }
+    100% {
+      opacity: 0;
+      transform: scaleY(0.05);
     }
   }
 
