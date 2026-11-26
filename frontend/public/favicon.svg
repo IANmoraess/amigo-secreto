@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Fundo arredondado em Forest Green -->
+  <rect width="32" height="32" rx="7" fill="#244638" />
+  <!-- Corpo do presente em Cranberry -->
+  <rect x="6" y="13" width="20" height="14" rx="2.5" fill="#C7474F" />
+  <!-- Tampa do presente em Cranberry escuro -->
+  <rect x="4.5" y="9.5" width="23" height="4.5" rx="1.5" fill="#A83D46" />
+  <!-- Fita vertical em Antique Gold / Dourado -->
+  <rect x="14" y="9.5" width="4" height="17.5" fill="#E5A93B" />
+  <!-- Laço superior em Dourado -->
+  <path d="M16 9.5c-2.2-4-7.5-4.5-8-1.5-.4 2.2 3.8 2.5 8 1.5Z" fill="#F4C45D" />
+  <path d="M16 9.5c2.2-4 7.5-4.5 8-1.5.4 2.2-3.8 2.5-8 1.5Z" fill="#E5A93B" />
+  <circle cx="16" cy="9.5" r="2" fill="#F4C45D" />
+</svg>

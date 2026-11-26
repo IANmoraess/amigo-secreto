@@ -8,6 +8,7 @@ import GiftIllustration from '../components/GiftIllustration.jsx';
 import GiftTag from '../components/GiftTag.jsx';
 import Spinner from '../components/Spinner.jsx';
 import { getErrorMessage, participantApi } from '../services/api.js';
+import { clearParticipantToken, saveParticipantToken } from '../services/participantSession.js';
 
 const CHARGE_DURATION_MS = 1350;
 const FLASH_RELEASE_MS = 650;
@@ -54,11 +55,13 @@ export default function Reveal() {
       .getAccess(token)
       .then((data) => {
         if (!active) return;
+        saveParticipantToken(token);
         setAccess(data);
         setStatus('ready');
       })
       .catch((error) => {
         if (!active) return;
+        clearParticipantToken();
         setLoadError(getErrorMessage(error));
         setStatus('error');
       });
@@ -121,15 +124,18 @@ export default function Reveal() {
   if (status === 'error') {
     return (
       <Card className="space-y-4 text-center">
-        <title>Link indisponível · Amigo Secreto</title>
+        <title>Evento indisponível · Amigo Secreto</title>
         <GiftIllustration variant="single" className="mx-auto h-20 w-20 opacity-60" />
         <h1 className="text-2xl font-bold tracking-tight text-pine-900">
-          Não foi possível abrir este link
+          Este evento não está mais disponível.
         </h1>
+        <p className="mx-auto max-w-prose text-sm leading-relaxed text-charcoal-soft">
+          O organizador encerrou este evento e os links de participação foram desativados.
+        </p>
         <Alert type="error">{loadError}</Alert>
-        <p className="text-sm text-charcoal-soft">
-          Confira se o link foi copiado por completo. Se o problema continuar, fale com quem
-          organizou o amigo secreto.
+        <p className="text-xs text-charcoal-soft">
+          Se você acredita que isso é um engano, confira se o link foi copiado por completo ou
+          fale com quem organizou o amigo secreto.
         </p>
       </Card>
     );

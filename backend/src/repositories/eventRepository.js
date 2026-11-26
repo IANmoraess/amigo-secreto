@@ -31,3 +31,19 @@ export function buildMarkCompletedStatement(db, { eventId, drawnAt }) {
     .prepare("UPDATE events SET status = 'completed', drawn_at = ? WHERE id = ? AND status = 'draft'")
     .bind(drawnAt, eventId);
 }
+
+/**
+ * Remove atomicamente um evento e todos os seus dados associados (sorteios e participantes).
+ * A atualização para 'draft' dentro do mesmo batch permite remover participantes de eventos
+ * já sorteados sem violar o trigger de integridade `trg_participants_no_delete_after_draw`.
+ */
+export async function deleteEventCascade(db, eventId) {
+  const results = await db.batch([
+    db.prepare('DELETE FROM draws WHERE event_id = ?').bind(eventId),
+    db.prepare("UPDATE events SET status = 'draft' WHERE id = ?").bind(eventId),
+    db.prepare('DELETE FROM participants WHERE event_id = ?').bind(eventId),
+    db.prepare('DELETE FROM events WHERE id = ?').bind(eventId),
+  ]);
+
+  return results[3]?.meta?.changes ?? 0;
+}

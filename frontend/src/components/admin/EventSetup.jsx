@@ -1,6 +1,8 @@
-import { CalendarPlus, FolderOpen, List } from 'lucide-react';
+import { useState } from 'react';
+import { CalendarPlus, FolderOpen, List, Trash2 } from 'lucide-react';
 import Button from '../Button.jsx';
 import Card from '../Card.jsx';
+import ConfirmDialog from '../ConfirmDialog.jsx';
 import TextField from '../TextField.jsx';
 
 const STATUS = {
@@ -9,7 +11,12 @@ const STATUS = {
 };
 
 /** Permite criar um novo evento, selecionar um salvo no banco ou abrir pelo código. */
-export default function EventSetup({ events = [], loadingEvents = false, onCreate, onOpen, busy }) {
+export default function EventSetup({ events = [], loadingEvents = false, onCreate, onOpen, onDelete, busy }) {
+  const [pendingDelete, setPendingDelete] = useState(null);
+  const [confirmName, setConfirmName] = useState('');
+
+  const isDeleting = Boolean(pendingDelete && busy === `delete:${pendingDelete.id}`);
+  const nameMatches = Boolean(pendingDelete && confirmName.trim() === pendingDelete.name);
   function handleCreate(event) {
     event.preventDefault();
     const name = new FormData(event.currentTarget).get('eventName').trim();
@@ -34,7 +41,7 @@ export default function EventSetup({ events = [], loadingEvents = false, onCreat
         <form onSubmit={handleCreate} aria-labelledby="create-event-title" className="mt-5 space-y-5">
           <TextField
             label="Nome do evento"
-            hint="Por exemplo: Natal da Família 2026. Até 100 caracteres."
+            placeholder="Ex.: Natal da Família 2026"
             name="eventName"
             required
             maxLength={100}
@@ -87,15 +94,36 @@ export default function EventSetup({ events = [], loadingEvents = false, onCreat
                       <code className="font-mono">{item.id}</code>
                     </p>
                   </div>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => onOpen(item.id)}
-                    disabled={Boolean(busy)}
-                  >
-                    Abrir
-                  </Button>
+                  <div className="flex items-center gap-1.5">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => onOpen(item.id)}
+                      disabled={Boolean(busy)}
+                    >
+                      Abrir
+                    </Button>
+                    {onDelete && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setConfirmName('');
+                          setPendingDelete(item);
+                        }}
+                        loading={busy === `delete:${item.id}`}
+                        loadingLabel={`Excluindo ${item.name}`}
+                        disabled={Boolean(busy)}
+                        aria-label={`Excluir evento ${item.name}`}
+                        title="Excluir evento"
+                        className="border border-berry-600/35 bg-berry-600/15 px-2.5 text-berry-700 hover:!bg-berry-600/28 active:!bg-berry-600/35"
+                      >
+                        <Trash2 className="h-4 w-4" aria-hidden="true" />
+                      </Button>
+                    )}
+                  </div>
                 </li>
               );
             })}
@@ -135,6 +163,40 @@ export default function EventSetup({ events = [], loadingEvents = false, onCreat
           </Button>
         </form>
       </Card>
+
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        title="Excluir evento definitivamente?"
+        confirmLabel="Excluir definitivamente"
+        confirmVariant="danger"
+        confirmDisabled={!nameMatches}
+        confirmLoading={isDeleting}
+        onConfirm={async () => {
+          if (!pendingDelete || !nameMatches) return;
+          const target = pendingDelete;
+          setPendingDelete(null);
+          setConfirmName('');
+          await onDelete?.(target);
+        }}
+        onCancel={() => {
+          setPendingDelete(null);
+          setConfirmName('');
+        }}
+      >
+        <p>
+          Esta ação é <strong>permanente</strong> e não pode ser desfeita. Todos os participantes,
+          registros do sorteio e links individuais deste evento serão invalidados imediatamente.
+        </p>
+        <TextField
+          label={`Digite "${pendingDelete?.name ?? ''}" para confirmar`}
+          name="confirmEventName"
+          value={confirmName}
+          onChange={(e) => setConfirmName(e.target.value)}
+          autoComplete="off"
+          placeholder={pendingDelete?.name ?? ''}
+          className="pt-2"
+        />
+      </ConfirmDialog>
     </div>
   );
 }

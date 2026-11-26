@@ -6,6 +6,7 @@ import {
 import {
   buildMarkCompletedStatement,
   createEvent,
+  deleteEventCascade,
   findEventById,
   listEvents,
 } from '../repositories/eventRepository.js';
@@ -69,6 +70,14 @@ export async function listEventsService(db) {
       participantCount: Number(event.participant_count ?? 0),
     })),
   };
+}
+
+export async function deleteEventService(db, eventId) {
+  const deletedCount = await deleteEventCascade(db, eventId);
+  if (deletedCount !== 1) {
+    throw new HTTPException(404, { message: 'Evento não encontrado.' });
+  }
+  return { ok: true };
 }
 
 export async function addParticipantService(db, eventId, name) {

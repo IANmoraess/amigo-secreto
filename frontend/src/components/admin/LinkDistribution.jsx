@@ -97,7 +97,7 @@ export default function LinkDistribution({ links, onFinish }) {
               <CopyButton
                 text={buildRevealLink(link.token)}
                 variant={copied ? 'secondary' : 'coral'}
-                label={copied ? 'Copiar novamente' : 'Copiar link'}
+                label="Copiar link"
                 srLabel={`de ${link.name}`}
                 onCopied={() => markCopied(link.participantId)}
               />

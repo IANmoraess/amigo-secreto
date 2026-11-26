@@ -9,7 +9,7 @@ Aplicação web simples, segura e gratuita para organizar sorteios de amigo secr
 ### 1. Como Organizador (Administrador)
 
 1. Acesse a página inicial e clique em **Acessar área do organizador** (ou vá diretamente para `/admin`).
-2. Informe a **Chave administrativa** configurada no servidor (`ADMIN_TOKEN`). Ela fica apenas em memória enquanto você usa o painel.
+2. Informe a **Chave administrativa** configurada no servidor (`ADMIN_TOKEN`). Ela é trocada por uma **sessão temporária** e não é salva no navegador (veja [Sessão do organizador](#sessão-do-organizador-e-proteção-do-login)).
 3. Em **Criar novo evento**, digite o nome do amigo secreto (ex.: `Natal da Família 2026`) e clique em **Criar evento**.
 4. **Anote ou copie o código do evento** exibido no topo. Caso feche a página antes do sorteio (ou queira acompanhar depois quem já visualizou), você pode usar esse código em **Abrir evento existente**.
 5. Cadastre todos os participantes (mínimo de 2) e confira a lista. Enquanto o status for **Em preparação**, ainda é possível adicionar ou remover nomes.
@@ -63,6 +63,23 @@ Antes de usar com pessoas reais ou publicar na internet, faça estas configuraç
 
 ### 4. Atualizar o `database_id` do D1 em produção
 - Em [backend/wrangler.jsonc](file:///home/devaonet/amigo-secreto/backend/wrangler.jsonc), o campo `database_id` está com `00000000-0000-0000-0000-000000000000` apenas para uso local. Antes do deploy do backend, substitua-o pelo ID real gerado ao criar o banco D1 na Cloudflare.
+
+---
+
+## Sessão do organizador e proteção do login
+
+- **Login:** `POST /api/admin/login` troca a chave (`ADMIN_TOKEN`) por um token de sessão opaco (256 bits aleatórios). O banco guarda apenas o **hash SHA-256** da sessão (`admin_sessions`); a chave original nunca vai para `localStorage`, `sessionStorage` nem variáveis `VITE_*`.
+- **Duração:** 15 minutos de **inatividade**, sem limite de tempo total. Só atividade real do organizador (cliques/teclas, que chamam `POST /api/admin/session/touch`, no máximo a cada 20 s) renova o prazo. O polling de status dos participantes **não** renova a sessão. Uma sessão expirada nunca é revivida; o servidor é a autoridade, o relógio do navegador só antecipa a interface.
+- **Logout:** `POST /api/admin/session/logout` revoga a sessão no servidor e o navegador esquece o token.
+- **Bloqueio de tentativas:** 3 chaves inválidas seguidas bloqueiam novas tentativas por 60 s (HTTP `429` com `retryAfterSeconds`). O contador fica no D1 (`admin_login_attempts`, chaveado pelo hash do IP em `CF-Connecting-IP`), atualizado por um único `UPSERT` atômico; vale para todas as abas, instâncias do Worker e recarregamentos. Não usa `X-Forwarded-For`.
+- **Expiração durante o uso:** o painel mostra o login por cima, mantendo evento aberto e **links de distribuição na memória** (tokens individuais nunca são recuperáveis do banco). Após autenticar de novo, o organizador continua de onde parou.
+- **Migration nova:** `0003_admin_sessions.sql`. Aplique com `npm run db:migrate:local` (local) e `npm run db:migrate:remote` (produção) **antes** de publicar o backend.
+
+### Por que o token de sessão fica em `localStorage` (e não em cookie)
+
+Frontend (`*.pages.dev`) e API (`*.workers.dev`) são **sites diferentes** (ambos estão na Public Suffix List). Um cookie `HttpOnly` precisaria de `SameSite=None; Secure` e seria tratado como cookie de terceiros, bloqueado por padrão no Safari/Firefox e cada vez mais no Chrome, o que quebraria o login. Por isso o token de sessão é enviado no cabeçalho `Authorization: Bearer`.
+
+**Riscos residuais:** um XSS no frontend poderia ler o token de sessão (cookie `HttpOnly` evitaria isso). Mitigações: o token expira em 15 min de inatividade, é revogável, independe da chave original e o frontend não injeta HTML dinâmico nem usa bibliotecas de terceiros fora do React. **Recomendação:** publicar o painel e a API sob um mesmo domínio próprio (ex.: `app.exemplo.com` e `api.exemplo.com`) permitiria migrar para cookie `HttpOnly; Secure; SameSite=Lax` sem alterar o restante da arquitetura. O limite de bloqueio é por IP: quem controla muitos IPs distintos dilui o limite, mas a chave deve ser longa e aleatória (veja `openssl rand -base64 32`).
 
 ---
 

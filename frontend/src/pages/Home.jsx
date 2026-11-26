@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Send, Shuffle, Sparkles, UserPlus, Users } from 'lucide-react';
+import { Gift, Send, Shuffle, Sparkles, UserPlus, Users } from 'lucide-react';
 import Card from '../components/Card.jsx';
 import GiftIllustration from '../components/GiftIllustration.jsx';
 import { buttonClasses } from '../components/Button.jsx';
+import { loadParticipantToken } from '../services/participantSession.js';
 
 const STEPS = [
   {
@@ -32,6 +33,8 @@ const STEPS = [
 ];
 
 export default function Home() {
+  const participantToken = loadParticipantToken();
+
   return (
     <div className="space-y-9 sm:space-y-11">
       <title>Amigo Secreto</title>
@@ -63,6 +66,15 @@ export default function Home() {
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               Acessar área do organizador
             </Link>
+            {participantToken && (
+              <Link
+                to={`/sorteio#${encodeURIComponent(participantToken)}`}
+                className={buttonClasses({ variant: 'secondary', className: 'w-full sm:w-auto' })}
+              >
+                <Gift className="h-4 w-4" aria-hidden="true" />
+                Voltar ao meu sorteio
+              </Link>
+            )}
             <p className="text-xs text-charcoal-soft">
               Recebeu um link? Basta abri-lo para descobrir quem você tirou.
             </p>

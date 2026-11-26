@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { CircleAlert, Check, Copy } from 'lucide-react';
 import { buttonClasses } from './Button.jsx';
 
 const FEEDBACK_DURATION_MS = 2000;
@@ -8,9 +8,9 @@ const FEEDBACK_DURATION_MS = 2000;
 let lastMessage = '';
 
 /**
- * Botão que copia um texto para a área de transferência.
- * O texto copiado nunca é exibido na tela. A confirmação aparece em uma
- * região role="status" fora do botão, para ser lida por leitores de tela.
+ * Botão que copia um texto para a área de transferência sem causar deslocamento de layout.
+ * Mantém largura e altura constantes entre os estados normal, copiado e erro,
+ * além de anunciar o resultado em uma região `role="status"` acessível.
  */
 export default function CopyButton({
   text,
@@ -53,26 +53,24 @@ export default function CopyButton({
     }, FEEDBACK_DURATION_MS);
   }
 
-  const Icon = state === 'copied' ? Check : Copy;
+  const Icon = state === 'copied' ? Check : state === 'failed' ? CircleAlert : Copy;
+  const displayLabel = state === 'copied' ? 'Copiado' : state === 'failed' ? 'Falhou' : label;
 
   return (
-    <span className="inline-flex items-center gap-2">
+    <span className="inline-flex items-center">
       <button
         type="button"
         onClick={handleClick}
         data-state={state}
         className={buttonClasses({ variant, size })}
       >
-        <Icon className="h-4 w-4" aria-hidden="true" />
-        {label}
+        <span className="inline-flex items-center gap-2 whitespace-nowrap">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+          {displayLabel}
+        </span>
         {srLabel && <span className="sr-only"> {srLabel}</span>}
       </button>
-      <span
-        role="status"
-        className={`text-sm transition-opacity ${message ? 'opacity-100' : 'opacity-0'} ${
-          state === 'failed' ? 'text-berry-700' : 'text-pine-700'
-        }`}
-      >
+      <span role="status" className="sr-only">
         {message}
       </span>
     </span>

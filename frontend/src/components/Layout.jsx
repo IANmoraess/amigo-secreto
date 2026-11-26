@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Gift } from 'lucide-react';
 
@@ -65,14 +66,16 @@ function FooterOrnament() {
 
 /** Estrutura comum das páginas: cabeçalho limpo, ornamentos discretos, conteúdo e rodapé. */
 export default function Layout() {
+  const [headerRight, setHeaderRight] = useState(null);
+
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-clip">
       {/* Ornamentos botânicos discretos restritos às áreas vazias laterais em telas largas */}
       <CornerSprig className="fixed top-16 right-0 z-0 hidden h-44 w-44 opacity-60 lg:block" />
       <CornerSprig className="fixed bottom-4 left-0 z-0 hidden h-44 w-44 rotate-180 opacity-50 lg:block" />
 
-      <header className="sticky top-0 z-20 border-b border-sage/35 bg-warm-white/92 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3.5">
+      <header className="sticky top-0 z-20 w-full border-b border-sage/35 bg-warm-white/92 backdrop-blur-sm">
+        <div className="flex w-full items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
           <Link
             to="/"
             className="flex items-center gap-2.5 rounded-xl font-bold tracking-tight text-pine-900 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-pine-700"
@@ -86,11 +89,15 @@ export default function Layout() {
             </span>
             <span className="text-lg">Amigo Secreto</span>
           </Link>
+
+          {headerRight && (
+            <div className="flex items-center gap-3 text-sm text-charcoal-soft">{headerRight}</div>
+          )}
         </div>
       </header>
 
       <main className="relative z-10 mx-auto w-full max-w-3xl flex-1 px-4 py-7 sm:py-11">
-        <Outlet />
+        <Outlet context={{ setHeaderRight }} />
       </main>
 
       <footer className="relative z-10 px-4 py-7 text-center text-sm text-charcoal-soft">

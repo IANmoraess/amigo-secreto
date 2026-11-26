@@ -13,6 +13,8 @@ export default function ConfirmDialog({
   confirmLabel = 'Confirmar',
   cancelLabel = 'Cancelar',
   confirmVariant = 'primary',
+  confirmDisabled = false,
+  confirmLoading = false,
   onConfirm,
   onCancel,
 }) {
@@ -58,10 +60,17 @@ export default function ConfirmDialog({
         {children}
       </div>
       <form method="dialog" className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
-        <Button ref={cancelRef} type="submit" value="cancel" variant="secondary">
+        <Button ref={cancelRef} type="submit" value="cancel" variant="secondary" disabled={confirmLoading}>
           {cancelLabel}
         </Button>
-        <Button type="submit" value="confirm" variant={confirmVariant}>
+        <Button
+          type="submit"
+          value="confirm"
+          variant={confirmVariant}
+          disabled={confirmDisabled}
+          loading={confirmLoading}
+          loadingLabel={confirmLabel}
+        >
           {confirmLabel}
         </Button>
       </form>

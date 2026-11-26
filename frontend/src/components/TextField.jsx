@@ -23,7 +23,7 @@ export default function TextField({ label, hint, id, className = '', ref, ...inp
         ref={ref}
         id={inputId}
         aria-describedby={hintId}
-        className="min-h-12 w-full rounded-2xl border border-sage/60 bg-cream/55 px-4 text-base text-charcoal placeholder:text-charcoal-soft/70 transition-colors focus:border-pine-800 focus:bg-warm-white focus-visible:outline-3 focus-visible:outline-offset-1 focus-visible:outline-pine-700 user-invalid:border-berry-600 user-invalid:bg-berry-50"
+        className="min-h-12 w-full rounded-2xl border border-sage/60 bg-cream/55 px-4 text-base text-charcoal placeholder:text-charcoal-soft/70 transition-colors focus:border-pine-800 focus:bg-warm-white focus-visible:outline-3 focus-visible:outline-offset-1 focus-visible:outline-pine-700 user-invalid:border-berry-600 user-invalid:bg-berry-50 disabled:cursor-not-allowed disabled:opacity-60"
         {...inputProps}
       />
     </div>

@@ -3,12 +3,14 @@ import { cors } from 'hono/cors';
 import { adminAuth } from './middleware/adminAuth.js';
 import { createRateLimiter } from './middleware/rateLimit.js';
 import adminRoutes from './routes/admin.js';
+import { adminLoginHandler } from './routes/adminLogin.js';
 import sorteioRoutes from './routes/sorteio.js';
 
 const app = new Hono();
 const globalRateLimit = createRateLimiter({ scope: 'global', windowMs: 60_000, max: 100 });
 const adminRateLimit = createRateLimiter({ scope: 'admin', windowMs: 60_000, max: 60 });
-const adminVerifyRateLimit = createRateLimiter({ scope: 'admin-verify', windowMs: 60_000, max: 10 });
+// Camada barata por isolado antes do D1; o limite autoritativo de tentativas (3 + 60 s) vive no D1.
+const adminLoginRateLimit = createRateLimiter({ scope: 'admin-login', windowMs: 60_000, max: 20 });
 const sorteioRateLimit = createRateLimiter({ scope: 'sorteio', windowMs: 60_000, max: 30 });
 
 /**
@@ -58,8 +60,11 @@ app.get('/api/health', (c) => {
   return c.json({ ok: true });
 });
 
-// Rotas administrativas protegidas por rate limit e autenticação
-app.use('/api/admin/verify', adminVerifyRateLimit);
+// Login administrativo: rota pública registrada ANTES do middleware de autenticação.
+// O handler responde diretamente (não chama next), portanto não passa por `adminAuth`.
+app.post('/api/admin/login', adminLoginRateLimit, adminLoginHandler);
+
+// Demais rotas administrativas protegidas por rate limit e por sessão válida
 app.use('/api/admin/*', adminRateLimit, adminAuth);
 app.route('/api/admin', adminRoutes);
 
