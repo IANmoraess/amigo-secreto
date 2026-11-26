@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, KeyRound } from 'lucide-react';
+import { KeyRound } from 'lucide-react';
 import Button from '../Button.jsx';
 import Card from '../Card.jsx';
 import TextField from '../TextField.jsx';
@@ -56,19 +56,6 @@ export default function AdminLogin({ onSubmit, onBack, loading = false, lockedUn
   return (
     <Card className="mx-auto max-w-md">
       <div className="mb-6 flex items-center gap-3">
-        {onBack && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            disabled={loading}
-            aria-label="Voltar para a página inicial"
-            title="Voltar"
-            className="min-h-10 w-10 flex-none px-0"
-          >
-            <ArrowLeft className="h-5 w-5" aria-hidden="true" />
-          </Button>
-        )}
         <span className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-mint-100 text-pine-800">
           <KeyRound className="h-5 w-5" aria-hidden="true" />
         </span>
@@ -93,19 +80,32 @@ export default function AdminLogin({ onSubmit, onBack, loading = false, lockedUn
           enterKeyHint="go"
           disabled={locked}
         />
-        <Button
-          type="submit"
-          loading={loading}
-          loadingLabel="Verificando chave"
-          disabled={locked}
-          className="w-full"
-        >
-          {loading
-            ? 'Verificando...'
-            : locked
-              ? `Tente novamente em ${formatCountdown(remainingSeconds)}`
-              : 'Entrar'}
-        </Button>
+        <div className="flex flex-col-reverse gap-3 sm:flex-row">
+          {onBack && (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={onBack}
+              disabled={loading}
+              className="w-full sm:w-auto"
+            >
+              Voltar
+            </Button>
+          )}
+          <Button
+            type="submit"
+            loading={loading}
+            loadingLabel="Verificando chave"
+            disabled={locked}
+            className="w-full sm:flex-1"
+          >
+            {loading
+              ? 'Verificando...'
+              : locked
+                ? `Tente novamente em ${formatCountdown(remainingSeconds)}`
+                : 'Entrar'}
+          </Button>
+        </div>
       </form>
     </Card>
   );

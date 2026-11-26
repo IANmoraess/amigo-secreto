@@ -14,7 +14,7 @@ import ParticipantManager from '../components/admin/ParticipantManager.jsx';
 import { clearStoredSession, loadStoredSession, storeSession } from '../services/adminSession.js';
 import { adminApi, getErrorMessage } from '../services/api.js';
 
-const EVENT_POLL_INTERVAL_MS = 5000;
+const EVENT_POLL_INTERVAL_MS = 15000;
 // Intervalo mínimo entre renovações de sessão disparadas por atividade do organizador.
 const ACTIVITY_TOUCH_MIN_INTERVAL_MS = 20_000;
 const SESSION_EXPIRED_MESSAGE =
