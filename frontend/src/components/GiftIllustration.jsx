@@ -558,18 +558,22 @@ export default function GiftIllustration({
 
   return (
     <svg viewBox="0 0 120 120" className={className} aria-hidden="true" focusable="false">
-      <ellipse cx="60" cy="108" rx="38" ry="4" className="fill-mint-100" />
+      <ellipse cx="60" cy="108" rx="38" ry="4.5" fill="var(--color-gift-shadow)" />
       <g className={`gift-glow ${opened ? 'gift-glow-open' : ''}`}>
         <ellipse cx="60" cy="52" rx="30" ry="9" className="fill-gold-100" />
       </g>
-      <rect x="22" y="52" width="76" height="52" rx="12" className="fill-pine-800" />
-      <rect x="53" y="52" width="14" height="52" className="fill-gold-500" />
+      <path
+        d="M24 52H96Q98 52 98 54V94A10 10 0 0 1 88 104H32A10 10 0 0 1 22 94V54Q22 52 24 52Z"
+        fill="var(--color-gift-body)"
+      />
+      <rect x="22" y="55" width="76" height="2.5" fill="var(--color-gift-lid)" opacity="0.45" />
+      <rect x="53" y="52" width="14" height="52" fill="var(--color-gift-gold)" />
       <g className={`gift-lid ${opened ? 'gift-lid-open' : ''}`}>
-        <rect x="16" y="36" width="88" height="20" rx="8" className="fill-pine-900" />
-        <rect x="53" y="36" width="14" height="20" className="fill-gold-500" />
-        <path d="M60 36c-6-13-24-18-27-8-2 8 13 9 27 8Z" className="fill-berry-600" />
-        <path d="M60 36c6-13 24-18 27-8 2 8-13 9-27 8Z" className="fill-berry-700" />
-        <circle cx="60" cy="36" r="5" className="fill-gold-500" />
+        <rect x="16" y="36" width="88" height="20" rx="7" fill="var(--color-gift-lid)" />
+        <rect x="53" y="36" width="14" height="20" fill="var(--color-gift-gold)" />
+        <path d="M60 36c-6-13-24-18-27-8-2 8 13 9 27 8Z" fill="var(--color-gift-ribbon)" />
+        <path d="M60 36c6-13 24-18 27-8 2 8-13 9-27 8Z" fill="var(--color-gift-ribbon-fold)" />
+        <circle cx="60" cy="36" r="5" fill="var(--color-gift-gold)" />
       </g>
     </svg>
   );

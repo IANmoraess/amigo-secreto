@@ -74,13 +74,19 @@
   --color-btn-coral-active: #C35836;
   --color-btn-coral-text: #18372D;
 
+  --color-btn-secondary: #E4EAE0;
+  --color-btn-secondary-hover: #D3DDD0;
+  --color-btn-secondary-active: #C6D1BF;
+  --color-btn-secondary-border: rgb(169 183 160 / 0.5);
+  --color-btn-secondary-text: #18372D;
+
   /* Presente SVG e etiqueta (tema claro) */
-  --color-gift-body: #244638;
-  --color-gift-lid: #18372D;
-  --color-gift-rim: #2F5947;
-  --color-gift-ribbon: #A83D46;
-  --color-gift-ribbon-fold: #8B2F37;
-  --color-gift-gold: #C5A16B;
+  --color-gift-body: #347653;
+  --color-gift-lid: #275C41;
+  --color-gift-rim: #438A64;
+  --color-gift-ribbon: #C7474F;
+  --color-gift-ribbon-fold: #A6363E;
+  --color-gift-gold: #D4AA68;
   --color-gift-shadow: rgb(24 55 45 / 0.16);
   --color-gift-light-core: #FFFFFF;
   --color-gift-light-main: #FFF9DF;
@@ -98,6 +104,7 @@
   --color-tag-cord-back: #B58E56;
   --color-tag-detail: #D99A35;
   --color-tag-shadow: rgb(139 47 55 / 0.2);
+  --color-snowflake: rgb(154 170 144 / 0.52);
 
   /* Componentes informativos (Alert) */
   --color-alert-success-bg: #E3EBDD;
@@ -121,36 +128,36 @@
   :root {
     color-scheme: only dark;
 
-    --color-cream: #0F141A;
-    --color-cream-light: #151C24;
-    --color-warm-white: #182028;
-    --color-surface: #182028;
-    --color-surface-elevated: #212C36;
+    --color-cream: #111211;
+    --color-cream-light: #1A231D;
+    --color-warm-white: #191B19;
+    --color-surface: #191B19;
+    --color-surface-elevated: #222522;
     --color-charcoal: #F2EFE9;
-    --color-charcoal-soft: #B2BEC9;
+    --color-charcoal-soft: #B5B8B4;
     --color-heading: #F2EFE9;
     --color-pine-accent: #C7D8C9;
 
     --color-pine-900: #F2EFE9;
     --color-pine-800: #C7D8C9;
     --color-pine-700: #8EBA98;
-    --color-pine-100: #223039;
-    --color-pine-50: #1C2730;
+    --color-pine-100: #242925;
+    --color-pine-50: #1D211E;
 
-    --color-sage: #5E6F7E;
-    --color-mint-200: #2E3D4A;
-    --color-mint-100: #222D37;
-    --color-mint-50: #1B242D;
+    --color-sage: #6E736F;
+    --color-mint-200: #314638;
+    --color-mint-100: #25362B;
+    --color-mint-50: #1D2821;
 
-    --color-berry-700: #F0B2B7;
-    --color-berry-600: #C94D57;
-    --color-berry-100: #3E2226;
-    --color-berry-50: #321C20;
+    --color-berry-700: #F4B8BD;
+    --color-berry-600: #EE7A83;
+    --color-berry-100: #4C242A;
+    --color-berry-50: #381C21;
 
-    --color-gold-600: #E2BE78;
+    --color-gold-600: #F0C46E;
     --color-gold-500: #DFB56A;
     --color-gold-400: #EDD097;
-    --color-gold-100: #382F1F;
+    --color-gold-100: #42351C;
 
     --color-btn-cranberry: #B93D47;
     --color-btn-cranberry-hover: #CC4A55;
@@ -167,26 +174,32 @@
     --color-btn-festive-active: #25573E;
     --color-btn-festive-text: #FFFCF7;
 
-    --color-btn-coral: #D96E4C;
-    --color-btn-coral-hover: #E57D5C;
-    --color-btn-coral-active: #C25C3C;
-    --color-btn-coral-text: #1D130F;
+    --color-btn-coral: #B8523B;
+    --color-btn-coral-hover: #CA5E46;
+    --color-btn-coral-active: #A34530;
+    --color-btn-coral-text: #FFFCF7;
 
-    --color-alert-success-bg: #1F3328;
-    --color-alert-success-text: #CDE4D0;
-    --color-alert-success-icon: #7EC18F;
+    --color-btn-secondary: #242824;
+    --color-btn-secondary-hover: #2E342E;
+    --color-btn-secondary-active: #384038;
+    --color-btn-secondary-border: #3A423B;
+    --color-btn-secondary-text: #F2EFE9;
 
-    --color-alert-info-bg: #1F2D3A;
-    --color-alert-info-text: #CFE0EE;
-    --color-alert-info-icon: #85B0CE;
+    --color-alert-success-bg: #233529;
+    --color-alert-success-text: #D7ECD9;
+    --color-alert-success-icon: #88D09B;
 
-    --color-alert-warning-bg: #382E1E;
-    --color-alert-warning-text: #EED9AE;
-    --color-alert-warning-icon: #DFB56A;
+    --color-alert-info-bg: #222B2E;
+    --color-alert-info-text: #DCE7EC;
+    --color-alert-info-icon: #8DC2D9;
 
-    --color-alert-error-bg: #3B2225;
-    --color-alert-error-text: #F0C6C8;
-    --color-alert-error-icon: #DF7E86;
+    --color-alert-warning-bg: #42351B;
+    --color-alert-warning-text: #F8E8C4;
+    --color-alert-warning-icon: #F2C464;
+
+    --color-alert-error-bg: #462328;
+    --color-alert-error-text: #F7D4D7;
+    --color-alert-error-icon: #F0828B;
 
     --color-gift-body: #2F5B46;
     --color-gift-lid: #204233;
@@ -211,64 +224,19 @@
     --color-tag-cord-back: #B38A4B;
     --color-tag-detail: #F2D796;
     --color-tag-shadow: rgb(5 8 11 / 0.45);
+    --color-snowflake: rgb(244 240 232 / 0.62);
   }
 
   .bg-warm-white\/92 {
-    background-color: rgb(24 32 40 / 0.92);
+    background-color: rgb(25 27 25 / 0.92);
   }
 
   .bg-warm-white\/60 {
-    background-color: rgb(33 44 54 / 0.78);
+    background-color: rgb(34 37 34 / 0.78);
   }
 
   dialog::backdrop {
     background-color: rgb(0 0 0 / 0.72);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-cream: #10241D;
-    --color-cream-light: #163127;
-    --color-surface: #1A382D;
-    --color-charcoal: #F4F0E8;
-    --color-charcoal-soft: #C2CEC3;
-    --color-heading: #F4F0E8;
-    --color-heading-soft: #C9D8CB;
-
-    --color-pine-100: #254D3E;
-    --color-pine-50: #214538;
-
-    --color-mint-200: #2E5E4C;
-    --color-mint-100: #254D3E;
-    --color-mint-50: #214538;
-
-    --color-berry-700: #F2B5BA;
-    --color-berry-100: #4C252B;
-    --color-berry-50: #3E2025;
-
-    --color-gold-600: #E5C185;
-    --color-gold-100: #3D321E;
-
-    --color-alert-success-bg: #1F3D2F;
-    --color-alert-success-text: #D9EAD8;
-    --color-alert-success-icon: #7BC295;
-
-    --color-alert-info-bg: #1D3342;
-    --color-alert-info-text: #D7E7F2;
-    --color-alert-info-icon: #7EB3D4;
-
-    --color-alert-warning-bg: #3C301C;
-    --color-alert-warning-text: #F2DFB8;
-    --color-alert-warning-icon: #E5B96B;
-
-    --color-alert-error-bg: #402125;
-    --color-alert-error-text: #F4D6D9;
-    --color-alert-error-icon: #E6828B;
-  }
-
-  dialog::backdrop {
-    background-color: rgb(6 16 12 / 0.65);
   }
 }
 
@@ -1325,5 +1293,50 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+.snowflake {
+  position: absolute;
+  top: -1rem;
+  border-radius: 9999px;
+  background-color: var(--color-snowflake);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .snowflake {
+    animation: snowfall var(--snow-dur, 14s) linear var(--snow-delay, 0s) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowfall {
+    display: none;
+  }
+}
+
+@keyframes snowfall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -4vh, 0);
+  }
+
+  10% {
+    opacity: var(--snow-opacity, 0.6);
+  }
+
+  50% {
+    transform: translate3d(var(--snow-drift, 12px), 52vh, 0);
+  }
+
+  90% {
+    opacity: var(--snow-opacity, 0.6);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 106vh, 0);
   }
 }

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { CircleCheck, EyeOff, Gift } from 'lucide-react';
 import Alert from '../components/Alert.jsx';
 import Button from '../components/Button.jsx';
 import Card from '../components/Card.jsx';
 import GiftIllustration from '../components/GiftIllustration.jsx';
 import GiftTag from '../components/GiftTag.jsx';
+import SnowmanIllustration from '../components/SnowmanIllustration.jsx';
 import Spinner from '../components/Spinner.jsx';
 import { getErrorMessage, participantApi } from '../services/api.js';
 import { clearParticipantToken, saveParticipantToken } from '../services/participantSession.js';
@@ -97,7 +98,6 @@ export default function Reveal() {
   const token = extractToken(paramToken, location.hash);
   const [status, setStatus] = useState('loading'); // loading | ready | error
   const [access, setAccess] = useState(null);
-  const [loadError, setLoadError] = useState('');
   const [receiverName, setReceiverName] = useState(null);
   const [showResultTag, setShowResultTag] = useState(false);
   const giftRef = useRef(null);
@@ -124,10 +124,9 @@ export default function Reveal() {
         setAccess(data);
         setStatus('ready');
       })
-      .catch((error) => {
+      .catch(() => {
         if (!active) return;
         clearParticipantToken();
-        setLoadError(getErrorMessage(error));
         setStatus('error');
       });
 
@@ -208,20 +207,26 @@ export default function Reveal() {
 
   if (status === 'error') {
     return (
-      <Card className="space-y-4 text-center">
-        <title>Evento indisponível · Amigo Secreto</title>
-        <GiftIllustration variant="single" className="mx-auto h-20 w-20 opacity-60" />
-        <h1 className="text-2xl font-bold tracking-tight text-pine-900">
-          Este evento não está mais disponível.
-        </h1>
-        <p className="mx-auto max-w-prose text-sm leading-relaxed text-charcoal-soft">
-          O organizador encerrou este evento e os links de participação foram desativados.
-        </p>
-        <Alert type="error">{loadError}</Alert>
-        <p className="text-xs text-charcoal-soft">
-          Se você acredita que isso é um engano, confira se o link foi copiado por completo ou
-          fale com quem organizou o amigo secreto.
-        </p>
+      <Card className="space-y-5 py-8 text-center">
+        <title>Sorteio indisponível · Amigo Secreto</title>
+        <SnowmanIllustration className="mx-auto h-36 w-36 sm:h-44 sm:w-44" />
+        <div className="space-y-2">
+          <h1 className="text-xl font-bold tracking-tight text-pine-900 sm:text-2xl">
+            Ops! Este sorteio não está disponível
+          </h1>
+          <p className="mx-auto max-w-md text-sm leading-relaxed text-charcoal-soft">
+            O link pode ter sido encerrado ou copiado pela metade. Se precisar, fale com quem
+            organizou o grupo.
+          </p>
+        </div>
+        <div>
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-xl border border-mint-200 bg-surface-elevated px-4 py-2 text-sm font-semibold text-pine-900 transition-colors hover:bg-mint-50 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-pine-700"
+          >
+            Voltar para a página inicial
+          </Link>
+        </div>
       </Card>
     );
   }
@@ -246,7 +251,7 @@ export default function Reveal() {
         {access.eventName}
       </span>
 
-      <h1 className="mt-3 text-2xl font-bold tracking-tight text-pine-900 sm:text-3xl">
+      <h1 className="mt-3 text-3xl font-bold tracking-tight text-pine-900 sm:text-4xl">
         Olá, {access.participantName}!
       </h1>
 

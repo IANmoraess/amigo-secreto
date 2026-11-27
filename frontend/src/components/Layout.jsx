@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import Snowfall from './Snowfall.jsx';
 
 /** Ramo botânico natalino minimalista para áreas vazias laterais (telas largas). */
 function CornerSprig({ className = '' }) {
@@ -69,6 +70,8 @@ export default function Layout() {
 
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-clip">
+      <Snowfall />
+
       {/* Ornamentos botânicos discretos restritos às áreas vazias laterais em telas largas */}
       <CornerSprig className="fixed top-16 right-0 z-0 hidden h-44 w-44 opacity-60 lg:block" />
       <CornerSprig className="fixed bottom-4 left-0 z-0 hidden h-44 w-44 rotate-180 opacity-50 lg:block" />

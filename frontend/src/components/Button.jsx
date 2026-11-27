@@ -13,12 +13,12 @@ const VARIANTS = {
   // Coral — ações alternativas e elementos que precisam de destaque
   coral:
     'bg-btn-coral text-btn-coral-text hover:bg-btn-coral-hover active:bg-btn-coral-active focus-visible:outline-btn-coral-active',
-  // Secundário suave integrado à paleta Muted Sage
+  // Secundário suave integrado à paleta
   secondary:
-    'border border-sage/40 bg-mint-100 text-pine-900 hover:bg-mint-200/80 active:bg-mint-200 focus-visible:outline-pine-700',
+    'border border-btn-secondary-border bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover active:bg-btn-secondary-active focus-visible:outline-pine-700',
   // Ações destrutivas (remover participante, confirmações críticas)
   danger:
-    'bg-berry-600 text-btn-cranberry-text hover:bg-berry-700 active:bg-berry-700/90 focus-visible:outline-berry-600',
+    'bg-btn-cranberry text-btn-cranberry-text hover:bg-btn-cranberry-hover active:bg-btn-cranberry-active focus-visible:outline-btn-cranberry',
   // Ações discretas de navegação/lista
   ghost:
     'text-pine-800 hover:bg-mint-100/85 active:bg-mint-200/60 focus-visible:outline-pine-700',
