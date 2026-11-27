@@ -9,24 +9,28 @@ const STEPS = [
   {
     number: '01',
     Icon: UserPlus,
+    badgeClasses: 'bg-mint-100 text-pine-800',
     title: 'Crie o evento',
     text: 'Dê um nome à sua confraternização.',
   },
   {
     number: '02',
     Icon: Users,
+    badgeClasses: 'bg-gold-100 text-gold-600',
     title: 'Adicione pessoas',
     text: 'Cadastre e confira os participantes.',
   },
   {
     number: '03',
     Icon: Shuffle,
+    badgeClasses: 'bg-berry-50 text-berry-700',
     title: 'Faça o sorteio',
     text: 'Um sorteio único, sem tirar a si mesmo.',
   },
   {
     number: '04',
     Icon: Send,
+    badgeClasses: 'bg-gold-100 text-gold-600',
     title: 'Envie os links',
     text: 'Cada pessoa recebe seu resultado privado.',
   },
@@ -46,16 +50,16 @@ export default function Home() {
         />
 
         <Card className="relative z-1 text-center">
-          <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-mint-50 px-3.5 py-1 text-xs font-semibold text-pine-800">
+          <div className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3.5 py-1 text-xs font-semibold text-gold-600">
             Amigo secreto de Natal
           </div>
 
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-balance text-pine-900 sm:text-4xl">
-            Organize seu Amigo Secreto sem estresse
+            Sorteie seu Amigo Secreto em instantes
           </h1>
           <p className="mx-auto mt-3 max-w-prose text-pretty text-charcoal-soft">
-            Reúna quem você ama mesmo à distância. Crie o grupo, faça o sorteio em segundos e
-            envie um link secreto para cada participante.
+            Cadastre os participantes, realize o sorteio com um clique e envie um link individual
+            para cada pessoa descobrir quem tirou.
           </p>
 
           <div className="mt-6 flex flex-col items-center gap-3">
@@ -91,7 +95,7 @@ export default function Home() {
             aria-hidden="true"
             className="pointer-events-none absolute top-5 right-[12.5%] left-[12.5%] hidden h-px bg-gold-500/60 md:block"
           />
-          {STEPS.map(({ number, Icon, title, text }, index) => (
+          {STEPS.map(({ number, Icon, badgeClasses, title, text }, index) => (
             <li
               key={number}
               style={{ '--stagger-index': index }}
@@ -103,11 +107,11 @@ export default function Home() {
                   className="pointer-events-none absolute top-10 bottom-0 left-5 w-px bg-gold-500/55 md:hidden"
                 />
               )}
-              <span className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-[#C5A16B] bg-pine-900 text-sm font-bold tracking-wide text-warm-white ring-4 ring-cream">
+              <span className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-[#C5A16B] bg-[#1F272E] text-sm font-bold tracking-wide text-[#F2EFE9] ring-4 ring-cream">
                 {number}
               </span>
               <div className="flex-1 pt-0.5 md:mt-5 md:flex md:flex-col md:items-center md:pt-0">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-sage/25 text-pine-800">
+                <span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ${badgeClasses}`}>
                   <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
                 </span>
                 <h3 className="mt-3 text-[15px] leading-tight font-bold text-pine-900 md:whitespace-nowrap">
@@ -123,14 +127,14 @@ export default function Home() {
 
       <section
         aria-labelledby="privacidade"
-        className="relative overflow-hidden rounded-3xl bg-pine-800 px-6 py-6 text-left text-mint-50 shadow-[0_10px_28px_-14px_rgb(24_55_45/0.30)] sm:px-8 sm:py-7"
+        className="relative overflow-hidden rounded-3xl border border-[#C5A16B]/25 bg-[#1F272E] px-6 py-6 text-left text-[#F2EFE9] shadow-[0_10px_28px_-14px_rgb(15_20_26/0.35)] sm:px-8 sm:py-7"
       >
         <svg
           viewBox="0 0 96 96"
           fill="none"
           aria-hidden="true"
           focusable="false"
-          className="pointer-events-none absolute -right-2 -bottom-2 h-24 w-24 opacity-15"
+          className="pointer-events-none absolute -right-2 -bottom-2 h-24 w-24 opacity-20"
         >
           <path d="M88 88C68 74 52 54 38 26" stroke="#C5A16B" strokeWidth="2" strokeLinecap="round" />
           <path d="M68 68C60 76 48 77 42 70C50 64 60 63 68 68Z" fill="#C5A16B" />
@@ -138,10 +142,10 @@ export default function Home() {
           <path d="M72 64C78 54 77 44 70 39C65 48 66 57 72 64Z" fill="#C5A16B" />
         </svg>
         <div className="relative max-w-prose">
-          <h2 id="privacidade" className="text-base font-bold text-warm-white sm:text-lg">
+          <h2 id="privacidade" className="text-base font-bold text-[#E5B96B] sm:text-lg">
             Privacidade do sorteio
           </h2>
-          <p className="mt-2.5 text-sm leading-relaxed text-mint-100">
+          <p className="mt-2.5 text-sm leading-relaxed text-[#C6D0D8]">
             Cada participante acessa apenas o próprio resultado pelo link individual. Os pares não
             são exibidos no painel.
           </p>

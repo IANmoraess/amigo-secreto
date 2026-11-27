@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { Gift } from 'lucide-react';
 
 /** Ramo botânico natalino minimalista para áreas vazias laterais (telas largas). */
 function CornerSprig({ className = '' }) {
@@ -74,17 +73,24 @@ export default function Layout() {
       <CornerSprig className="fixed top-16 right-0 z-0 hidden h-44 w-44 opacity-60 lg:block" />
       <CornerSprig className="fixed bottom-4 left-0 z-0 hidden h-44 w-44 rotate-180 opacity-50 lg:block" />
 
-      <header className="sticky top-0 z-20 w-full border-b border-sage/35 bg-warm-white/92 backdrop-blur-sm">
+      <header className="sticky top-0 z-20 w-full border-b border-sage/35 bg-surface/92 backdrop-blur-sm">
         <div className="flex w-full items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
           <Link
             to="/"
-            className="flex items-center gap-2.5 rounded-xl font-bold tracking-tight text-pine-900 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-pine-700"
+            className="flex items-center gap-2.5 rounded-xl font-bold tracking-tight text-heading focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-pine-700"
           >
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-pine-800 text-warm-white">
-              <Gift className="h-5 w-5" aria-hidden="true" />
+            <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-[#244638]">
+              <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden="true" focusable="false">
+                <rect x="5" y="13" width="22" height="14" rx="2.5" fill="#C7474F" />
+                <rect x="3.5" y="9.5" width="25" height="4.5" rx="1.5" fill="#A83D46" />
+                <rect x="14" y="9.5" width="4" height="17.5" fill="#E5A93B" />
+                <path d="M16 9.5c-2.2-4-7.5-4.5-8-1.5-.4 2.2 3.8 2.5 8 1.5Z" fill="#F4C45D" />
+                <path d="M16 9.5c2.2-4 7.5-4.5 8-1.5.4 2.2-3.8 2.5-8 1.5Z" fill="#E5A93B" />
+                <circle cx="16" cy="9.5" r="2" fill="#F4C45D" />
+              </svg>
               <span
                 aria-hidden="true"
-                className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-warm-white bg-gold-500"
+                className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-surface bg-gold-500"
               />
             </span>
             <span className="text-lg">Amigo Secreto</span>

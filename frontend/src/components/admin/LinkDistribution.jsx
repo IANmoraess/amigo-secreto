@@ -39,7 +39,7 @@ export default function LinkDistribution({ links, onFinish }) {
     <Card className="space-y-6">
       <div>
         <h2 className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-pine-900">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint-100 text-pine-800">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gold-100 text-gold-600">
             <Send className="h-5 w-5" aria-hidden="true" />
           </span>
           Distribuição dos links individuais

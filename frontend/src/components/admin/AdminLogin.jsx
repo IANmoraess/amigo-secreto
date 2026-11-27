@@ -56,7 +56,7 @@ export default function AdminLogin({ onSubmit, onBack, loading = false, lockedUn
   return (
     <Card className="mx-auto max-w-md">
       <div className="mb-6 flex items-center gap-3">
-        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-mint-100 text-pine-800">
+        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-gold-100 text-gold-600">
           <KeyRound className="h-5 w-5" aria-hidden="true" />
         </span>
         <h1 id="admin-login-title" className="text-2xl font-bold tracking-tight text-pine-900">

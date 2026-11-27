@@ -66,7 +66,7 @@ export default function Admin() {
     if (!setHeaderRight) return undefined;
     setHeaderRight(
       authenticated ? (
-        <span className="rounded-full bg-mint-100 px-3 py-1 text-xs font-semibold text-pine-800">
+        <span className="rounded-full bg-gold-100 px-3 py-1 text-xs font-semibold text-gold-600">
           Painel do organizador
         </span>
       ) : null

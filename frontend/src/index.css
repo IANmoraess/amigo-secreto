@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light only;
+  color-scheme: only light;
 }
 
 @theme {
@@ -11,7 +11,13 @@
   --color-cream-light: #F7F3EA;
   /* Variação sutil de fundo */
   --color-warm-white: #FFFCF7;
-  /* Warm White — superfícies e áreas de conteúdo */
+  /* Warm White — branco quente fixo (botões e textos sobre fundos escuros) */
+  --color-surface: #FFFCF7;
+  /* Superfície adaptável (Warm White no claro, Deep Pine no escuro) */
+  --color-heading: #18372D;
+  /* Títulos adaptáveis (Deep Pine no claro, Warm Ivory no escuro) */
+  --color-pine-accent: #244638;
+  /* Destaque verde adaptável sobre superfícies suaves */
   --color-charcoal: #303832;
   /* Charcoal — textos principais */
   --color-charcoal-soft: #59635B;
@@ -51,18 +57,47 @@
   --color-btn-cranberry: #C7474F;
   --color-btn-cranberry-hover: #B13B43;
   --color-btn-cranberry-active: #9A3138;
+  --color-btn-cranberry-text: #FFFCF7;
 
   --color-btn-gold: #D99A35;
   --color-btn-gold-hover: #C48828;
   --color-btn-gold-active: #AE761F;
+  --color-btn-gold-text: #18372D;
 
   --color-btn-festive: #347653;
   --color-btn-festive-hover: #2B6345;
   --color-btn-festive-active: #225037;
+  --color-btn-festive-text: #FFFCF7;
 
   --color-btn-coral: #E87954;
   --color-btn-coral-hover: #D86944;
   --color-btn-coral-active: #C35836;
+  --color-btn-coral-text: #18372D;
+
+  /* Presente SVG e etiqueta (tema claro) */
+  --color-gift-body: #244638;
+  --color-gift-lid: #18372D;
+  --color-gift-rim: #2F5947;
+  --color-gift-ribbon: #A83D46;
+  --color-gift-ribbon-fold: #8B2F37;
+  --color-gift-gold: #C5A16B;
+  --color-gift-shadow: rgb(24 55 45 / 0.16);
+  --color-gift-light-core: #FFFFFF;
+  --color-gift-light-main: #FFF9DF;
+  --color-gift-light-beam: #FFE39A;
+  --color-gift-light-gold: #F5C66B;
+  --color-gift-light-warm: #E9AD4C;
+  --color-gift-particle-main: #EBC04F;
+  --color-gift-particle-berry: #C7474F;
+  --color-gift-particle-coral: #E87954;
+  --color-gift-particle-gold: #C5A16B;
+
+  --color-tag-bg: #A83D46;
+  --color-tag-text: #FFFCF7;
+  --color-tag-cord: #C5A16B;
+  --color-tag-cord-back: #B58E56;
+  --color-tag-detail: #D99A35;
+  --color-tag-shadow: rgb(139 47 55 / 0.2);
 
   /* Componentes informativos (Alert) */
   --color-alert-success-bg: #E3EBDD;
@@ -80,6 +115,161 @@
   --color-alert-error-bg: #F4E1DF;
   --color-alert-error-text: #814047;
   --color-alert-error-icon: #A83D46;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: only dark;
+
+    --color-cream: #0F141A;
+    --color-cream-light: #151C24;
+    --color-warm-white: #182028;
+    --color-surface: #182028;
+    --color-surface-elevated: #212C36;
+    --color-charcoal: #F2EFE9;
+    --color-charcoal-soft: #B2BEC9;
+    --color-heading: #F2EFE9;
+    --color-pine-accent: #C7D8C9;
+
+    --color-pine-900: #F2EFE9;
+    --color-pine-800: #C7D8C9;
+    --color-pine-700: #8EBA98;
+    --color-pine-100: #223039;
+    --color-pine-50: #1C2730;
+
+    --color-sage: #5E6F7E;
+    --color-mint-200: #2E3D4A;
+    --color-mint-100: #222D37;
+    --color-mint-50: #1B242D;
+
+    --color-berry-700: #F0B2B7;
+    --color-berry-600: #C94D57;
+    --color-berry-100: #3E2226;
+    --color-berry-50: #321C20;
+
+    --color-gold-600: #E2BE78;
+    --color-gold-500: #DFB56A;
+    --color-gold-400: #EDD097;
+    --color-gold-100: #382F1F;
+
+    --color-btn-cranberry: #B93D47;
+    --color-btn-cranberry-hover: #CC4A55;
+    --color-btn-cranberry-active: #A1323B;
+    --color-btn-cranberry-text: #FFFCF7;
+
+    --color-btn-gold: #D49B38;
+    --color-btn-gold-hover: #E0AA4A;
+    --color-btn-gold-active: #BD862A;
+    --color-btn-gold-text: #19150E;
+
+    --color-btn-festive: #2E6B4C;
+    --color-btn-festive-hover: #387D5A;
+    --color-btn-festive-active: #25573E;
+    --color-btn-festive-text: #FFFCF7;
+
+    --color-btn-coral: #D96E4C;
+    --color-btn-coral-hover: #E57D5C;
+    --color-btn-coral-active: #C25C3C;
+    --color-btn-coral-text: #1D130F;
+
+    --color-alert-success-bg: #1F3328;
+    --color-alert-success-text: #CDE4D0;
+    --color-alert-success-icon: #7EC18F;
+
+    --color-alert-info-bg: #1F2D3A;
+    --color-alert-info-text: #CFE0EE;
+    --color-alert-info-icon: #85B0CE;
+
+    --color-alert-warning-bg: #382E1E;
+    --color-alert-warning-text: #EED9AE;
+    --color-alert-warning-icon: #DFB56A;
+
+    --color-alert-error-bg: #3B2225;
+    --color-alert-error-text: #F0C6C8;
+    --color-alert-error-icon: #DF7E86;
+
+    --color-gift-body: #2F5B46;
+    --color-gift-lid: #204233;
+    --color-gift-rim: #4D755F;
+    --color-gift-ribbon: #B8404B;
+    --color-gift-ribbon-fold: #8D2C36;
+    --color-gift-gold: #DFB56A;
+    --color-gift-shadow: rgb(0 0 0 / 0.5);
+    --color-gift-light-core: #FFF9E8;
+    --color-gift-light-main: #FFF1C7;
+    --color-gift-light-beam: #FFE39A;
+    --color-gift-light-gold: #F5C66B;
+    --color-gift-light-warm: #E9AD4C;
+    --color-gift-particle-main: #EBC04F;
+    --color-gift-particle-berry: #D36A73;
+    --color-gift-particle-coral: #F08A68;
+    --color-gift-particle-gold: #DFB56A;
+
+    --color-tag-bg: #962B36;
+    --color-tag-text: #FFF9F0;
+    --color-tag-cord: #D6AE68;
+    --color-tag-cord-back: #B38A4B;
+    --color-tag-detail: #F2D796;
+    --color-tag-shadow: rgb(5 8 11 / 0.45);
+  }
+
+  .bg-warm-white\/92 {
+    background-color: rgb(24 32 40 / 0.92);
+  }
+
+  .bg-warm-white\/60 {
+    background-color: rgb(33 44 54 / 0.78);
+  }
+
+  dialog::backdrop {
+    background-color: rgb(0 0 0 / 0.72);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-cream: #10241D;
+    --color-cream-light: #163127;
+    --color-surface: #1A382D;
+    --color-charcoal: #F4F0E8;
+    --color-charcoal-soft: #C2CEC3;
+    --color-heading: #F4F0E8;
+    --color-heading-soft: #C9D8CB;
+
+    --color-pine-100: #254D3E;
+    --color-pine-50: #214538;
+
+    --color-mint-200: #2E5E4C;
+    --color-mint-100: #254D3E;
+    --color-mint-50: #214538;
+
+    --color-berry-700: #F2B5BA;
+    --color-berry-100: #4C252B;
+    --color-berry-50: #3E2025;
+
+    --color-gold-600: #E5C185;
+    --color-gold-100: #3D321E;
+
+    --color-alert-success-bg: #1F3D2F;
+    --color-alert-success-text: #D9EAD8;
+    --color-alert-success-icon: #7BC295;
+
+    --color-alert-info-bg: #1D3342;
+    --color-alert-info-text: #D7E7F2;
+    --color-alert-info-icon: #7EB3D4;
+
+    --color-alert-warning-bg: #3C301C;
+    --color-alert-warning-text: #F2DFB8;
+    --color-alert-warning-icon: #E5B96B;
+
+    --color-alert-error-bg: #402125;
+    --color-alert-error-text: #F4D6D9;
+    --color-alert-error-icon: #E6828B;
+  }
+
+  dialog::backdrop {
+    background-color: rgb(6 16 12 / 0.65);
+  }
 }
 
 @layer base {

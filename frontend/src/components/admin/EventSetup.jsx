@@ -63,7 +63,7 @@ export default function EventSetup({ events = [], loadingEvents = false, onCreat
 
       <Card>
         <h2 id="saved-events-title" className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-pine-900">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint-100 text-pine-800">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-berry-50 text-berry-700">
             <List className="h-5 w-5" aria-hidden="true" />
           </span>
           Eventos salvos

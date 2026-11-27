@@ -23,67 +23,70 @@ export default function GiftIllustration({
         focusable="false"
       >
         <defs>
-          {/* Recorte trapezoidal suave: concentrado na abertura (x=48..152) e expandindo para cima (x=18..182) */}
+          {/* Recorte trapezoidal suave com folga superior para nunca cortar o gradiente no scaleY */}
           <clipPath id="gift-light-clip">
-            <polygon points="18,0 182,0 152,98 48,98" />
+            <polygon points="12,-20 188,-20 152,98 48,98" />
           </clipPath>
 
           {/* Coluna vertical principal de luz projetada de dentro da abertura */}
           <linearGradient id="gift-shaft-vertical" x1="50%" y1="100%" x2="50%" y2="0%">
-            <stop offset="0%" stopColor="#FFF9DF" stopOpacity="1" />
-            <stop offset="20%" stopColor="#FFE184" stopOpacity="0.95" />
-            <stop offset="52%" stopColor="#EBB445" stopOpacity="0.6" />
-            <stop offset="82%" stopColor="#D99A35" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="#D99A35" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-gift-light-main)" stopOpacity="1" />
+            <stop offset="18%" stopColor="var(--color-gift-light-beam)" stopOpacity="0.92" />
+            <stop offset="48%" stopColor="var(--color-gift-light-gold)" stopOpacity="0.52" />
+            <stop offset="78%" stopColor="var(--color-gift-light-warm)" stopOpacity="0.14" />
+            <stop offset="94%" stopColor="var(--color-gift-light-warm)" stopOpacity="0" />
+            <stop offset="100%" stopColor="var(--color-gift-light-warm)" stopOpacity="0" />
           </linearGradient>
 
           {/* Núcleo central ainda mais luminoso projetado para cima */}
           <linearGradient id="gift-center-beam" x1="50%" y1="100%" x2="50%" y2="0%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-            <stop offset="26%" stopColor="#FFF0B8" stopOpacity="0.95" />
-            <stop offset="60%" stopColor="#F5C353" stopOpacity="0.52" />
-            <stop offset="100%" stopColor="#D99A35" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-gift-light-core)" stopOpacity="1" />
+            <stop offset="24%" stopColor="var(--color-gift-light-main)" stopOpacity="0.92" />
+            <stop offset="56%" stopColor="var(--color-gift-light-gold)" stopOpacity="0.46" />
+            <stop offset="92%" stopColor="var(--color-gift-light-warm)" stopOpacity="0" />
+            <stop offset="100%" stopColor="var(--color-gift-light-warm)" stopOpacity="0" />
           </linearGradient>
 
           {/* Faixa vertical nítida acompanhando a borda esquerda da caixa */}
           <linearGradient id="gift-edge-left" x1="0%" y1="50%" x2="100%" y2="50%">
-            <stop offset="0%" stopColor="#E5A938" stopOpacity="0.9" />
-            <stop offset="32%" stopColor="#FFE086" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#FFE086" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-gift-light-warm)" stopOpacity="0.9" />
+            <stop offset="32%" stopColor="var(--color-gift-light-beam)" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="var(--color-gift-light-beam)" stopOpacity="0" />
           </linearGradient>
 
           {/* Faixa vertical nítida acompanhando a borda direita da caixa */}
           <linearGradient id="gift-edge-right" x1="100%" y1="50%" x2="0%" y2="50%">
-            <stop offset="0%" stopColor="#E5A938" stopOpacity="0.9" />
-            <stop offset="32%" stopColor="#FFE086" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#FFE086" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-gift-light-warm)" stopOpacity="0.9" />
+            <stop offset="32%" stopColor="var(--color-gift-light-beam)" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="var(--color-gift-light-beam)" stopOpacity="0" />
           </linearGradient>
 
-          {/* Máscara vertical suave para as faixas laterais e feixes internos */}
+          {/* Máscara vertical suave com folga superior para eliminar qualquer corte reto */}
           <linearGradient id="gift-vertical-fade" x1="50%" y1="100%" x2="50%" y2="0%">
             <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-            <stop offset="55%" stopColor="#FFFFFF" stopOpacity="0.72" />
-            <stop offset="88%" stopColor="#FFFFFF" stopOpacity="0.18" />
+            <stop offset="46%" stopColor="#FFFFFF" stopOpacity="0.68" />
+            <stop offset="72%" stopColor="#FFFFFF" stopOpacity="0.16" />
+            <stop offset="84%" stopColor="#FFFFFF" stopOpacity="0" />
             <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
           </linearGradient>
 
           <mask id="gift-edge-fade-mask">
-            <rect x="0" y="0" width="200" height="98" fill="url(#gift-vertical-fade)" />
+            <rect x="0" y="-20" width="200" height="118" fill="url(#gift-vertical-fade)" />
           </mask>
 
           {/* Flash intenso na boca interna da caixa */}
           <linearGradient id="gift-opening-flash" x1="50%" y1="100%" x2="50%" y2="0%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-            <stop offset="45%" stopColor="#FFE79A" stopOpacity="0.92" />
-            <stop offset="100%" stopColor="#EAB243" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-gift-light-core)" stopOpacity="1" />
+            <stop offset="45%" stopColor="var(--color-gift-light-beam)" stopOpacity="0.92" />
+            <stop offset="100%" stopColor="var(--color-gift-light-warm)" stopOpacity="0" />
           </linearGradient>
 
           {/* Pequena luz escapando pela fresta no final da preparação e ao levantar a tampa */}
           <linearGradient id="gift-charge-leak" x1="50%" y1="100%" x2="50%" y2="0%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-            <stop offset="45%" stopColor="#FFE89E" stopOpacity="0.95" />
-            <stop offset="85%" stopColor="#F5C353" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#D99A35" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-gift-light-core)" stopOpacity="1" />
+            <stop offset="45%" stopColor="var(--color-gift-light-main)" stopOpacity="0.95" />
+            <stop offset="85%" stopColor="var(--color-gift-light-gold)" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="var(--color-gift-light-warm)" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -93,7 +96,8 @@ export default function GiftIllustration({
           cy="172"
           rx="52"
           ry="7.5"
-          className="gift-hero-shadow fill-pine-900/15"
+          fill="var(--color-gift-shadow)"
+          className="gift-hero-shadow"
         />
 
         {/* Corpo + luz recortada + partículas + tampa agrupados para movimento coeso */}
@@ -101,7 +105,7 @@ export default function GiftIllustration({
           {/* Interior escuro da caixa: recuado e contido sob a tampa fechada, limpo ao abrir */}
           <path
             d="M50.5 95H149.5Q151 95 151 96.5V98.5H49V96.5Q49 95 50.5 95Z"
-            fill="#18372D"
+            fill="var(--color-gift-lid)"
           />
 
           {/* Iluminação projetada em leque trapezoidal suave a partir da abertura da caixa */}
@@ -162,10 +166,10 @@ export default function GiftIllustration({
                 className="gift-light-mouth"
               />
 
-              {/* Camada 5: flash inicial brilhante no instante em que a tampa se abre */}
+              {/* Camada 5: flash inicial brilhante suavizado com o mesmo degradê */}
               <polygon
                 points="18,0 182,0 152,98 48,98"
-                fill="#FFF8DF"
+                fill="url(#gift-center-beam)"
                 className="gift-light-flash"
               />
             </g>
@@ -421,11 +425,11 @@ export default function GiftIllustration({
           {/* Corpo principal da caixa: cantos superiores discretos (r=2) para encaixe reto sob a tampa e base arredondada (r=14) */}
           <path
             d="M48 96H152Q154 96 154 98V156A14 14 0 0 1 140 170H60A14 14 0 0 1 46 156V98Q46 96 48 96Z"
-            fill="#244638"
+            fill="var(--color-gift-body)"
           />
-          <rect x="89" y="96" width="22" height="74" fill="#A83D46" />
-          <rect x="89" y="96" width="2" height="74" fill="#C5A16B" opacity="0.8" />
-          <rect x="109" y="96" width="2" height="74" fill="#C5A16B" opacity="0.8" />
+          <rect x="89" y="96" width="22" height="74" fill="var(--color-gift-ribbon)" />
+          <rect x="89" y="96" width="2" height="74" fill="var(--color-gift-gold)" opacity="0.8" />
+          <rect x="109" y="96" width="2" height="74" fill="var(--color-gift-gold)" opacity="0.8" />
 
           {/* Borda superior em verde mais claro para cortar a fita sob a luz e sumir na abertura */}
           <rect
@@ -434,7 +438,7 @@ export default function GiftIllustration({
             width="104"
             height="4.5"
             rx="2"
-            fill="#2F5947"
+            fill="var(--color-gift-rim)"
             className="gift-hero-rim"
           />
 
@@ -454,37 +458,37 @@ export default function GiftIllustration({
               width="104"
               height="4"
               rx="2"
-              fill="#EBC04F"
+              fill="var(--color-gift-particle-main)"
             />
           </g>
 
-          {/* Tampa e laço (Deep Pine + Cranberry + Antique Gold) */}
+          {/* Tampa e laço */}
           <g className="gift-hero-lid">
-            <rect x="38" y="72" width="124" height="27" rx="9" fill="#18372D" />
-            <rect x="89" y="72" width="22" height="27" fill="#A83D46" />
-            <rect x="89" y="72" width="2" height="27" fill="#C5A16B" opacity="0.8" />
-            <rect x="109" y="72" width="2" height="27" fill="#C5A16B" opacity="0.8" />
+            <rect x="38" y="72" width="124" height="27" rx="9" fill="var(--color-gift-lid)" />
+            <rect x="89" y="72" width="22" height="27" fill="var(--color-gift-ribbon)" />
+            <rect x="89" y="72" width="2" height="27" fill="var(--color-gift-gold)" opacity="0.8" />
+            <rect x="109" y="72" width="2" height="27" fill="var(--color-gift-gold)" opacity="0.8" />
 
             {/* Laço esculpido */}
             <path
               d="M100 72c-8-18-32-24-35-10-3 10 17 12 35 10Z"
-              fill="#A83D46"
+              fill="var(--color-gift-ribbon)"
             />
             <path
               d="M100 72c8-18 32-24 35-10 3 10-17 12-35 10Z"
-              fill="#8B2F37"
+              fill="var(--color-gift-ribbon-fold)"
             />
             <path
               d="M99 71c-6-10-20-13-22-6-1 5 10 7 22 6Z"
-              fill="#C5A16B"
+              fill="var(--color-gift-gold)"
               opacity="0.35"
             />
             <path
               d="M101 71c6-10 20-13 22-6 1 5-10 7-22 6Z"
-              fill="#C5A16B"
+              fill="var(--color-gift-gold)"
               opacity="0.28"
             />
-            <rect x="93" y="66" width="14" height="10" rx="5" fill="#C5A16B" />
+            <rect x="93" y="66" width="14" height="10" rx="5" fill="var(--color-gift-gold)" />
           </g>
         </g>
       </svg>
@@ -502,10 +506,10 @@ export default function GiftIllustration({
           />
           <rect x="16" y="38" width="74" height="16" rx="6" fill="#92A388" />
           <rect x="20" y="54" width="66" height="2" fill="#98A88E" />
-          <rect x="47" y="38" width="12" height="62" fill="#C5A16B" />
+          <rect x="47" y="38" width="12" height="62" fill="var(--color-gift-gold)" />
           <rect x="47" y="54" width="12" height="2" fill="#B28C55" opacity="0.55" />
-          <path d="M53 38c-5-11-20-15-22-6-2 7 11 8 22 6Z" fill="#D7B98A" />
-          <path d="M53 38c5-11 20-15 22-6 2 7-11 8-22 6Z" fill="#C5A16B" />
+          <path d="M53 38c-5-11-20-15-22-6-2 7 11 8 22 6Z" fill="var(--color-gold-400)" />
+          <path d="M53 38c5-11 20-15 22-6 2 7-11 8-22 6Z" fill="var(--color-gift-gold)" />
           <rect x="48" y="34" width="10" height="7" rx="3.5" fill="#B58E56" />
         </g>
 
@@ -513,38 +517,38 @@ export default function GiftIllustration({
         <g transform="rotate(9 222 76)">
           <path
             d="M196 51H258Q260 51 260 53V90A10 10 0 0 1 250 100H204A10 10 0 0 1 194 90V53Q194 51 196 51Z"
-            fill="#A83D46"
+            fill="var(--color-gift-ribbon)"
           />
-          <rect x="190" y="38" width="74" height="16" rx="6" fill="#8F3139" />
-          <rect x="194" y="54" width="66" height="2" fill="#97343C" />
-          <rect x="221" y="38" width="12" height="62" fill="#C5A16B" />
+          <rect x="190" y="38" width="74" height="16" rx="6" fill="var(--color-gift-ribbon-fold)" />
+          <rect x="194" y="54" width="66" height="2" fill="var(--color-gift-ribbon-fold)" />
+          <rect x="221" y="38" width="12" height="62" fill="var(--color-gift-gold)" />
           <rect x="221" y="54" width="12" height="2" fill="#B28C55" opacity="0.55" />
-          <path d="M227 38c-5-11-20-15-22-6-2 7 11 8 22 6Z" fill="#D7B98A" />
-          <path d="M227 38c5-11 20-15 22-6 2 7-11 8-22 6Z" fill="#C5A16B" />
+          <path d="M227 38c-5-11-20-15-22-6-2 7 11 8 22 6Z" fill="var(--color-gold-400)" />
+          <path d="M227 38c5-11 20-15 22-6 2 7-11 8-22 6Z" fill="var(--color-gift-gold)" />
           <rect x="222" y="34" width="10" height="7" rx="3.5" fill="#B58E56" />
         </g>
 
         {/* Presente central (Forest Green + tampa Deep Pine + laço e faixa inteiramente dourados) */}
         <g>
           <g className={`gift-glow ${opened ? 'gift-glow-open' : ''}`}>
-            <ellipse cx="140" cy="40" rx="34" ry="10" fill="#F5ECD9" />
-            <circle cx="96" cy="20" r="3" fill="#C5A16B" />
-            <circle cx="184" cy="18" r="2.5" fill="#A83D46" />
+            <ellipse cx="140" cy="40" rx="34" ry="10" fill="var(--color-gold-100)" />
+            <circle cx="96" cy="20" r="3" fill="var(--color-gift-gold)" />
+            <circle cx="184" cy="18" r="2.5" fill="var(--color-gift-ribbon)" />
           </g>
 
           <path
             d="M98 46H182Q184 46 184 48V94A12 12 0 0 1 172 106H108A12 12 0 0 1 96 94V48Q96 46 98 46Z"
-            fill="#244638"
+            fill="var(--color-gift-body)"
           />
-          <rect x="96" y="48" width="88" height="2.2" fill="#1E3C30" />
-          <rect x="132" y="46" width="16" height="60" fill="#C5A16B" />
+          <rect x="96" y="48" width="88" height="2.2" fill="var(--color-gift-lid)" />
+          <rect x="132" y="46" width="16" height="60" fill="var(--color-gift-gold)" />
           <rect x="132" y="48" width="16" height="2.2" fill="#B28C55" opacity="0.55" />
 
           <g className={`gift-lid ${opened ? 'gift-lid-open' : ''}`}>
-            <rect x="90" y="28" width="100" height="20" rx="8" fill="#1A382D" />
-            <rect x="132" y="28" width="16" height="20" fill="#C5A16B" />
-            <path d="M140 28c-6-14-24-18-27-8-2 8 13 9 27 8Z" fill="#D7B98A" />
-            <path d="M140 28c6-14 24-18 27-8 2 8-13 9-27 8Z" fill="#C5A16B" />
+            <rect x="90" y="28" width="100" height="20" rx="8" fill="var(--color-gift-lid)" />
+            <rect x="132" y="28" width="16" height="20" fill="var(--color-gift-gold)" />
+            <path d="M140 28c-6-14-24-18-27-8-2 8 13 9 27 8Z" fill="var(--color-gold-400)" />
+            <path d="M140 28c6-14 24-18 27-8 2 8-13 9-27 8Z" fill="var(--color-gift-gold)" />
             <rect x="134" y="23.5" width="12" height="8.5" rx="4.25" fill="#B58E56" />
           </g>
         </g>
